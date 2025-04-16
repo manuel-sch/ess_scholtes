@@ -34,7 +34,7 @@ import static org.dieschnittstelle.ess.utils.jsonb.JsonbJsonTypeInfoHandler.KLAS
  * prominent one, others may be a service center, website, appsite, etc.)
  * 
  * @author kreutel
- * 
+ *
  */
 // jpa annotations
 @Entity
@@ -70,7 +70,7 @@ public abstract class AbstractTouchpoint implements Serializable, GenericCRUDEnt
 
 	
 	@Id
-	@GeneratedValue// for the time being, we do not use the sequence generator: (strategy = GenerationType.SEQUENCE, generator = "touchpoint_sequence")
+			@GeneratedValue// for the time being, we do not use the sequence generator: (strategy = GenerationType.SEQUENCE, generator = "touchpoint_sequence")
 	protected long id;
 
 	/**
