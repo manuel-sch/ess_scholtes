@@ -151,7 +151,7 @@ public class GenericCRUDExecutor<T extends GenericCRUDEntity> {
 
 		try {
 			ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream(this.objectsDatabaseFile));
+						new FileOutputStream(this.objectsDatabaseFile));
 
 			// write the currentObjectId
 			oos.writeInt(this.currentObjectId);

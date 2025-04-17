@@ -2,11 +2,19 @@ package org.dieschnittstelle.ess.jrs.client.junit;
 
 import java.util.List;
 
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import org.apache.logging.log4j.Logger;
+import org.dieschnittstelle.ess.entities.crm.StationaryTouchpoint;
 import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
 import org.dieschnittstelle.ess.entities.erp.IndividualisedProductItem;
 
 import org.dieschnittstelle.ess.jrs.IProductCRUDService;
+import org.dieschnittstelle.ess.jrs.ITouchpointCRUDService;
+import org.dieschnittstelle.ess.jrs.client.jackson.LaissezFairePolymorphicJacksonProvider;
+import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+
+import static org.dieschnittstelle.ess.utils.Utils.show;
 
 public class ProductCRUDRESTClient {
 
@@ -14,13 +22,25 @@ public class ProductCRUDRESTClient {
 	
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductCRUDRESTClient.class);
 
-	public ProductCRUDRESTClient() throws Exception {
+	boolean async = false;
 
+	public static void main(String[] args) {
+		ProductCRUDRESTClient client = new ProductCRUDRESTClient();
+		// 1) read out all products
+		List<IndividualisedProductItem> products = (List<IndividualisedProductItem>) client.readAllProducts();
+		logger.info("read products: " + products);
+	}
 
+	public ProductCRUDRESTClient() {
 		/*
 		 * TODO: JRS2: create a client for the web service using ResteasyClientBuilder and ResteasyWebTarget
 		 */
-		serviceProxy = null;
+		Client client = ClientBuilder.newBuilder()
+				.build()
+				.register(LaissezFairePolymorphicJacksonProvider.class);
+		ResteasyWebTarget target = (ResteasyWebTarget)client.target("http://localhost:8080/api/" + (async ? "async/" : ""));
+		serviceProxy = target.proxy(IProductCRUDService.class);
+		show("ProductCRUDRESTClient(): serviceProxy: " + serviceProxy + " of class: " + serviceProxy.getClass());
 	}
 
 	public AbstractProduct createProduct(IndividualisedProductItem prod) {

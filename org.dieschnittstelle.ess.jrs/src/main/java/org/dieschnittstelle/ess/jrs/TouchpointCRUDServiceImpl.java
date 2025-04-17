@@ -69,5 +69,10 @@ public class TouchpointCRUDServiceImpl implements ITouchpointCRUDService {
     /*
      * UE JRS1: implement the method for updating touchpoints
      */
-
+    @Override
+    public StationaryTouchpoint updateTouchpoint(long parameterId, StationaryTouchpoint touchpoint) {
+        // safer, to handle id as url par seperately: single source of thruth, body manipulation
+        touchpoint.setId(parameterId);
+        return (StationaryTouchpoint) this.touchpointCRUD.updateObject(touchpoint);
+    }
 }
