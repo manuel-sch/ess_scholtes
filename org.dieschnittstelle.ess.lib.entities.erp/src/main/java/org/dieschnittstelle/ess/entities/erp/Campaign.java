@@ -1,5 +1,6 @@
 package org.dieschnittstelle.ess.entities.erp;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,17 +13,19 @@ import org.dieschnittstelle.ess.utils.jsonb.JsonbJsonTypeInfoHandler;
 import jakarta.json.bind.annotation.JsonbTypeDeserializer;
 import jakarta.json.bind.annotation.JsonbTypeSerializer;
 import jakarta.persistence.*;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
-//@JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
+@Entity
+@JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
+@Schema(name="Campaign")
 public class Campaign extends AbstractProduct implements Serializable {
 
 	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(Campaign.class);
 
-	/**
-	 * 
-	 */
+	@Serial
 	private static final long serialVersionUID = 4407600000386810001L;
 
+	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
 	private List<ProductBundle> bundles;
 
 	public Campaign() {

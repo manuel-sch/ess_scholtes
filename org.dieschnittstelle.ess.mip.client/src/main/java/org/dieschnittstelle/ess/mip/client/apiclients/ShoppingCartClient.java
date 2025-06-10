@@ -15,7 +15,6 @@ public class ShoppingCartClient implements ShoppingCart {
 	private long shoppingCartEntityId;
 
 	public ShoppingCartClient() throws Exception {
-
 		this.serviceProxy = ServiceProxyFactory.getInstance().getProxy(ShoppingCartService.class);
 		// a client will be instantiated for each new shopping cart, i.e. we will obtain a cart id here
 		this.shoppingCartEntityId = this.serviceProxy.createNewCart();
