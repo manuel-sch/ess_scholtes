@@ -9,95 +9,99 @@ import org.dieschnittstelle.ess.utils.jsonb.JsonbJsonTypeInfoHandler;
 import jakarta.json.bind.annotation.JsonbTypeDeserializer;
 import jakarta.json.bind.annotation.JsonbTypeSerializer;
 import jakarta.persistence.*;
+import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+@Entity
 @JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
+@Schema(name="IndividualisedProductItem")
 public class IndividualisedProductItem extends AbstractProduct implements Serializable {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(IndividualisedProductItem.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(IndividualisedProductItem.class);
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5109263395081656350L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5109263395081656350L;
 
-	private ProductType productType;
+    @Enumerated(EnumType.STRING)
+    private ProductType productType;
 
-	private int expirationAfterStocked;
-	
-	public IndividualisedProductItem() {
-		logger.debug("<constructor>");
-	}
-	
-	public IndividualisedProductItem(String name,ProductType type,int expirationAfterStocked) {
-		super(name);
-		this.productType = type;
-		this.expirationAfterStocked = expirationAfterStocked;
-	}
-	
-	public ProductType getProductType() {
-		return productType;
-	}
+    private int expirationAfterStocked;
 
-	public void setProductType(ProductType productType) {
-		this.productType = productType;
-	}
-	
-	public int getExpirationAfterStocked() {
-		return expirationAfterStocked;
-	}
+    public IndividualisedProductItem() {
+        logger.debug("<constructor>");
+    }
 
-	public void setExpirationAfterStocked(int expirationAfterStocked) {
-		this.expirationAfterStocked = expirationAfterStocked;
-	}
-	
-	public String toString() {
-		return "<IndividualisedProductItem " + this.getId() + ", " + this.getName() + ", " + this.productType + ">";
-	}
-	
-	public boolean equals(Object other) {
-		
-		if (other.getClass() != this.getClass()) 
-			return false;
-		
-		return this.getId() == ((IndividualisedProductItem)other).getId();
-	}
-	
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
+    public IndividualisedProductItem(String name, ProductType type, int expirationAfterStocked) {
+        super(name);
+        this.productType = type;
+        this.expirationAfterStocked = expirationAfterStocked;
+    }
 
-	@PostLoad
-	public void onPostLoad() {
-		logger.info("@PostLoad: " + this);
-	}
+    public ProductType getProductType() {
+        return productType;
+    }
 
-	@PostPersist
-	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);
-	}
+    public void setProductType(ProductType productType) {
+        this.productType = productType;
+    }
 
-	@PostRemove
-	public void onPostRemove() {
-		logger.info("@PostRemove: " + this);
-	}
+    public int getExpirationAfterStocked() {
+        return expirationAfterStocked;
+    }
 
-	@PostUpdate
-	public void onPostUpdate() {
-		logger.info("@PostUpdate: " + this);
-	}
+    public void setExpirationAfterStocked(int expirationAfterStocked) {
+        this.expirationAfterStocked = expirationAfterStocked;
+    }
 
-	@PrePersist
-	public void onPrePersist() {
-		logger.info("@PrePersist: " + this);
-	}
+    public String toString() {
+        return "<IndividualisedProductItem " + this.getId() + ", " + this.getName() + ", " + this.productType + ">";
+    }
 
-	@PreRemove
-	public void onPreRemove() {
-		logger.info("@PreRemove: " + this);
-	}
+    public boolean equals(Object other) {
 
-	@PreUpdate
-	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);
-	}
+        if (other.getClass() != this.getClass())
+            return false;
+
+        return this.getId() == ((IndividualisedProductItem) other).getId();
+    }
+
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @PostLoad
+    public void onPostLoad() {
+        logger.info("@PostLoad: " + this);
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+        logger.info("@PostPersist: " + this);
+    }
+
+    @PostRemove
+    public void onPostRemove() {
+        logger.info("@PostRemove: " + this);
+    }
+
+    @PostUpdate
+    public void onPostUpdate() {
+        logger.info("@PostUpdate: " + this);
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        logger.info("@PrePersist: " + this);
+    }
+
+    @PreRemove
+    public void onPreRemove() {
+        logger.info("@PreRemove: " + this);
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        logger.info("@PreUpdate: " + this);
+    }
 }

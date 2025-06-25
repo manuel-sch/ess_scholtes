@@ -80,10 +80,10 @@ public class TestStockSystem {
 	@Test
 	public void d_getProductsOnStock() {
 		// read out all products on stock for tp1 and tp2 and check whether size and content is correct
-		List products_tp1 = stockSystemClient.getProductsOnStock(TOUCHPOINT_1.getErpPointOfSaleId());
+		List<IndividualisedProductItem> products_tp1 = stockSystemClient.getProductsOnStock(TOUCHPOINT_1.getErpPointOfSaleId());
 		assertEquals("size of products at touchpoint correct for tp1", 2, products_tp1.size());
 
-		List products_tp2 = stockSystemClient.getProductsOnStock(TOUCHPOINT_2.getErpPointOfSaleId());
+		List<IndividualisedProductItem> products_tp2 = stockSystemClient.getProductsOnStock(TOUCHPOINT_2.getErpPointOfSaleId());
 		assertEquals("size of products at touchpoint correct for tp2", 1, products_tp2.size());
 		assertEquals("returned product for touchpoint correct for tp2", PRODUCT_1.getName(), ((IndividualisedProductItem) products_tp2.get(0)).getName());
 	}

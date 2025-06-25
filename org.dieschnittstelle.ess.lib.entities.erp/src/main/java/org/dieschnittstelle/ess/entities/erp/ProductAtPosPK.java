@@ -51,7 +51,7 @@ public class ProductAtPosPK implements Serializable {
 		if (obj.getClass() != this.getClass())
 			return false;
 
-		return this.product.getId() == ((ProductAtPosPK) obj).getProduct()
+		return this.product.getId() == ((ProductAtPosPK) obj)	.getProduct()
 				.getId()
 				&& this.pos.getId() == ((ProductAtPosPK) obj)
 						.getPos().getId();

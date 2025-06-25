@@ -61,7 +61,7 @@ public class TestProductCRUD {
 		// change the local name
 		PRODUCT_1.setName(PRODUCT_1.getName() + " " + PRODUCT_1.getName());
 		// update the product on the server-side
-		client.updateProduct(PRODUCT_1);
+		client.updateProduct(PRODUCT_1.getId(), PRODUCT_1);
 
 		// read out the product and compare the names
 		AbstractProduct testProduct = client.readProduct(PRODUCT_1.getId());
