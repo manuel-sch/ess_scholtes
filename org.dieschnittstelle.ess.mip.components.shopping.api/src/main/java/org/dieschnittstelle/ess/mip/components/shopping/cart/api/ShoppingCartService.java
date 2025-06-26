@@ -4,6 +4,7 @@ import org.dieschnittstelle.ess.entities.shopping.ShoppingCartItem;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
 import java.util.List;
 
