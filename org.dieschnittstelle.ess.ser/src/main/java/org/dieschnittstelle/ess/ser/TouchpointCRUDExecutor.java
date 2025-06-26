@@ -19,153 +19,152 @@ import org.dieschnittstelle.ess.entities.crm.StationaryTouchpoint;
 /**
  * partial CRUD operations for AbstractTouchpoint objects which are read in /
  * written to a file
- * 
+ *
  * @author kreutel
- * 
  */
 public class TouchpointCRUDExecutor {
 
-	/**
-	 * the logger
-	 */
-	protected static Logger logger = org.apache.logging.log4j.LogManager
-			.getLogger(TouchpointCRUDExecutor.class);
+    /**
+     * the logger
+     */
+    protected static Logger logger = org.apache.logging.log4j.LogManager
+            .getLogger(TouchpointCRUDExecutor.class);
 
-	/**
-	 * the id counter
-	 */
-	private int currentTouchpointId;
+    /**
+     * the id counter
+     */
+    private int currentTouchpointId;
 
-	/**
-	 * the file that contains the "database"
-	 */
-	private File touchpointsDatabaseFile;
+    /**
+     * the file that contains the "database"
+     */
+    private File touchpointsDatabaseFile;
 
-	/**
-	 * the list of touchpoints that is managed by this class
-	 */
-	private List<AbstractTouchpoint> touchpoints = new ArrayList<AbstractTouchpoint>();
+    /**
+     * the list of touchpoints that is managed by this class
+     */
+    private List<AbstractTouchpoint> touchpoints = new ArrayList<AbstractTouchpoint>();
 
-	/**
-	 * create the executor passing a file
-	 */
-	public TouchpointCRUDExecutor(File databaseFile) {
-		logger.info("<constructor>: " + databaseFile);
-		this.touchpointsDatabaseFile = databaseFile;
-	}
+    /**
+     * create the executor passing a file
+     */
+    public TouchpointCRUDExecutor(File databaseFile) {
+        logger.info("<constructor>: " + databaseFile);
+        this.touchpointsDatabaseFile = databaseFile;
+    }
 
-	/**
-	 * create a touchpoint
-	 */
-	public AbstractTouchpoint createTouchpoint(AbstractTouchpoint touchpoint) {
-		logger.info("createTouchpoint(): " + touchpoint);
+    /**
+     * create a touchpoint
+     */
+    public AbstractTouchpoint createTouchpoint(AbstractTouchpoint touchpoint) {
+        logger.info("createTouchpoint(): " + touchpoint);
 
-		// assign an id and add it to the list
-		touchpoint.setId(++currentTouchpointId);
-		this.touchpoints.add(touchpoint);
+        // assign an id and add it to the list
+        touchpoint.setId(++currentTouchpointId);
+        this.touchpoints.add(touchpoint);
 
-		return touchpoint;
-	}
+        return touchpoint;
+    }
 
-	/**
-	 * read all touchpoints
-	 */
-	public List<AbstractTouchpoint> readAllTouchpoints() {
-		logger.info("readAllTouchpoints(): " + this.touchpoints);
-		
-		return this.touchpoints;
-	}
+    /**
+     * read all touchpoints
+     */
+    public List<AbstractTouchpoint> readAllTouchpoints() {
+        logger.info("readAllTouchpoints(): " + this.touchpoints);
 
-	/**
-	 * delete a touchpoint given its id
-	 */
-	public boolean deleteTouchpoint(final long toDeleteId) {
-		logger.info("deleteTouchpoint(): " + toDeleteId);
-		
-		return this.touchpoints.remove(new AbstractTouchpoint() {
+        return this.touchpoints;
+    }
 
-			@Override
-			public long getId() {
-				return toDeleteId;
-			}
+    /**
+     * delete a touchpoint given its id
+     */
+    public boolean deleteTouchpoint(final long toDeleteId) {
+        logger.info("deleteTouchpoint(): " + toDeleteId);
 
-		});
-	}
+        return this.touchpoints.remove(new AbstractTouchpoint() {
 
-	/**
-	 * load the data from the file
-	 */
-	public void load() {
-		logger.info("load()...");
+            @Override
+            public long getId() {
+                return toDeleteId;
+            }
 
-		try {
-			if (!this.touchpointsDatabaseFile.exists()) {
-				logger.warn("the file "
-						+ this.touchpointsDatabaseFile
-						+ " does not exist yet. Will not try to read anything, but create a default touchpoint list");
-				// create an address
-				Address addr = new Address("Leopoldplatz", "8", "13353",
-						"Berlin");
-				// create the touchpoint
-				StationaryTouchpoint tp = new StationaryTouchpoint(-1,
-						"Filiale Wedding", addr);
+        });
+    }
 
-				this.createTouchpoint(tp);
-			} else {
-				logger.info("loading from existing file: " + this.touchpointsDatabaseFile.getAbsolutePath());
+    /**
+     * load the data from the file
+     */
+    public void load() {
+        logger.info("load()...");
 
-				ObjectInputStream ois = new ObjectInputStream(
-						new FileInputStream(this.touchpointsDatabaseFile));
+        try {
+            if (!this.touchpointsDatabaseFile.exists()) {
+                logger.warn("the file "
+                        + this.touchpointsDatabaseFile
+                        + " does not exist yet. Will not try to read anything, but create a default touchpoint list");
+                // create an address
+                Address addr = new Address("Leopoldplatz", "8", "13353",
+                        "Berlin");
+                // create the touchpoint
+                StationaryTouchpoint tp = new StationaryTouchpoint(-1,
+                        "Filiale Wedding", addr);
 
-				// first we try to read the currentTouchpointId
-				this.currentTouchpointId = ois.readInt();
-				logger.info("load(): read touchpointId: " + currentTouchpointId);
+                this.createTouchpoint(tp);
+            } else {
+                logger.info("loading from existing file: " + this.touchpointsDatabaseFile.getAbsolutePath());
 
-				// then try to read the objects
-				AbstractTouchpoint obj = null;
-				do {
-					obj = (AbstractTouchpoint) ois.readObject();
-					logger.info("load(): read object: " + obj);
+                ObjectInputStream ois = new ObjectInputStream(
+                        new FileInputStream(this.touchpointsDatabaseFile));
 
-					if (obj != null) {
-						this.touchpoints.add(obj);
-					}
-				} while (true);
-			}
-		} catch (EOFException eof) {
-			logger.info("we have reached the end of the data file");
-		} catch (Exception e) {
-			String err = "got exception: " + e;
-			logger.error(err, e);
-			throw new RuntimeException(e);
-		}
-		
-		logger.info("load(): touchpoints are: " + touchpoints);
-	}
+                // first we try to read the currentTouchpointId
+                this.currentTouchpointId = ois.readInt();
+                logger.info("load(): read touchpointId: " + currentTouchpointId);
 
-	/**
-	 * store the data to the file
-	 */
-	public void store() {
-		logger.info("store()...");
+                // then try to read the objects
+                AbstractTouchpoint obj = null;
+                do {
+                    obj = (AbstractTouchpoint) ois.readObject();
+                    logger.info("load(): read object: " + obj);
 
-		try {
-			ObjectOutputStream oos = new ObjectOutputStream(
-					new FileOutputStream(this.touchpointsDatabaseFile));
+                    if (obj != null) {
+                        this.touchpoints.add(obj);
+                    }
+                } while (true);
+            }
+        } catch (EOFException eof) {
+            logger.info("we have reached the end of the data file");
+        } catch (Exception e) {
+            String err = "got exception: " + e;
+            logger.error(err, e);
+            throw new RuntimeException(e);
+        }
 
-			// write the currentTouchpointId
-			oos.writeInt(this.currentTouchpointId);
-			// then write the touchpoints
-			for (AbstractTouchpoint tp : this.touchpoints) {
-				oos.writeObject(tp);
-			}
-		} catch (Exception e) {
-			String err = "got exception: " + e;
-			logger.error(err, e);
-			throw new RuntimeException(e);
-		}
+        logger.info("load(): touchpoints are: " + touchpoints);
+    }
 
-		logger.info("store(): done.");
-	}
+    /**
+     * store the data to the file
+     */
+    public void store() {
+        logger.info("store()...");
+
+        try {
+            ObjectOutputStream oos = new ObjectOutputStream(
+                    new FileOutputStream(this.touchpointsDatabaseFile));
+
+            // write the currentTouchpointId
+            oos.writeInt(this.currentTouchpointId);
+            // then write the touchpoints
+            for (AbstractTouchpoint tp : this.touchpoints) {
+                oos.writeObject(tp);
+            }
+        } catch (Exception e) {
+            String err = "got exception: " + e;
+            logger.error(err, e);
+            throw new RuntimeException(e);
+        }
+
+        logger.info("store(): done.");
+    }
 
 }

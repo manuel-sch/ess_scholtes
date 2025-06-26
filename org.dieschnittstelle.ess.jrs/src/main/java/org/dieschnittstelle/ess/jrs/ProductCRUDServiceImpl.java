@@ -16,7 +16,7 @@ import java.util.List;
  * TODO JRS2: implementieren Sie hier die im Interface deklarierten Methoden
  */
 
-public class ProductCRUDServiceImpl implements IProductCRUDService{
+public class ProductCRUDServiceImpl implements IProductCRUDService {
 
     protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductCRUDServiceImpl.class);
 

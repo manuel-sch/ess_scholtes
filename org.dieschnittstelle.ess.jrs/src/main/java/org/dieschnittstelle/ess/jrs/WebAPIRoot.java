@@ -14,7 +14,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ApplicationPath("/api")
-@OpenAPIDefinition(info=@Info(title = "WebAPI for JRS, OPI and WSV exercises", version = "0.1"))
+@OpenAPIDefinition(info = @Info(title = "WebAPI for JRS, OPI and WSV exercises", version = "0.1"))
 public class WebAPIRoot extends Application {
 
     @Override

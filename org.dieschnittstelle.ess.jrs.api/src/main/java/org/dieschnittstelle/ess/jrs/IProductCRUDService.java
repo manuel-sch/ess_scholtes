@@ -39,7 +39,7 @@ public interface IProductCRUDService {
 
     @PUT
     @Path("/{id}")
-    public AbstractProduct updateProduct(@PathParam("id")long id, AbstractProduct product);
+    public AbstractProduct updateProduct(@PathParam("id") long id, AbstractProduct product);
 
     @DELETE
     @Path("/{id}")

@@ -13,6 +13,7 @@ import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
 import org.dieschnittstelle.ess.jrs.client.jackson.LaissezFairePolymorphicJacksonProvider;
 
 import jakarta.ws.rs.client.*;
+
 import java.io.*;
 import java.util.*;
 
@@ -47,10 +48,9 @@ public class ServiceProxyFactory {
                 clientResponseContext.setEntityStream(dataForFurtherProcessing);
 
                 if (clientResponseContext.getStatus() != HttpStatus.SC_OK && clientResponseContext.getStatus() != HttpStatus.SC_CREATED && clientResponseContext.getStatus() != HttpStatus.SC_ACCEPTED) {
-                    logger.error("got response body for status " + clientResponseContext.getStatus() +  ": " + IOUtils.toString(dataForLogging));
-                }
-                else {
-                    logger.info("got response body for status " + clientResponseContext.getStatus() +  ": " + IOUtils.toString(dataForLogging));
+                    logger.error("got response body for status " + clientResponseContext.getStatus() + ": " + IOUtils.toString(dataForLogging));
+                } else {
+                    logger.info("got response body for status " + clientResponseContext.getStatus() + ": " + IOUtils.toString(dataForLogging));
                 }
             }
         }
@@ -99,9 +99,8 @@ public class ServiceProxyFactory {
         try {
             essClientProperties.load(ServiceProxyFactory.class.getClassLoader().getResourceAsStream("ess-mip-client.properties"));
             logger.info("initialise(): loaded properties: " + essClientProperties);
-        }
-        catch (Exception e) {
-            throw new ServiceProxyException("<static initialiser> got exception trying to read client properties: " + e,e);
+        } catch (Exception e) {
+            throw new ServiceProxyException("<static initialiser> got exception trying to read client properties: " + e, e);
         }
     }
 
@@ -202,7 +201,7 @@ public class ServiceProxyFactory {
                 .filter(prop -> prop.startsWith(PROPERTY_WEB_API_BASE_URL_PREFIX + deployment + "."))
                 .sorted(Comparator.comparingInt(String::length).reversed())
                 .forEach(prop -> {
-                    serviceRegistry.add(new ServiceRegistryItem(prop.substring((PROPERTY_WEB_API_BASE_URL_PREFIX + deployment + ".").length()),((ResteasyWebTarget) client.target(String.valueOf(essClientProperties.getProperty(prop))))));
+                    serviceRegistry.add(new ServiceRegistryItem(prop.substring((PROPERTY_WEB_API_BASE_URL_PREFIX + deployment + ".").length()), ((ResteasyWebTarget) client.target(String.valueOf(essClientProperties.getProperty(prop))))));
                 });
     }
 

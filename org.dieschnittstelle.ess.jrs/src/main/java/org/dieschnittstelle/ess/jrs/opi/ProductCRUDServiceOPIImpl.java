@@ -27,49 +27,49 @@ import jakarta.ws.rs.core.MediaType;
 // TODO: verwenden Sie die URI opi/products
 public class ProductCRUDServiceOPIImpl {
 
-	private IProductCRUDService service;
+    private IProductCRUDService service;
 
-	public ProductCRUDServiceOPIImpl() {
+    public ProductCRUDServiceOPIImpl() {
 
-	}
+    }
 
-	/*
-	 * TODO: implementieren Sie einen weiteren Konstruktor, der es Ihnen erlaubt, das service Attribut
-	 *  so zu instantiieren, dass es zur Laufzeit erfolgreich verwendet werden kann
-	 */
+    /*
+     * TODO: implementieren Sie einen weiteren Konstruktor, der es Ihnen erlaubt, das service Attribut
+     *  so zu instantiieren, dass es zur Laufzeit erfolgreich verwendet werden kann
+     */
 
-	public IndividualisedProductItem createProduct(
-			IndividualisedProductItem prod) {
-		return (IndividualisedProductItem)this.service.createProduct(prod);
-	}
+    public IndividualisedProductItem createProduct(
+            IndividualisedProductItem prod) {
+        return (IndividualisedProductItem) this.service.createProduct(prod);
+    }
 
-	// TODO: ueberlegen Sie, wie Sie createCampaign() von createProduct() unterscheidbar machen koennen - wenn
-	//  Sie JRS3 umgesetzt haben, koennen Sie die derzeit noch auskommentierte Codezeile aktivieren
-	public Campaign createCampaign(
-			Campaign prod) {
+    // TODO: ueberlegen Sie, wie Sie createCampaign() von createProduct() unterscheidbar machen koennen - wenn
+    //  Sie JRS3 umgesetzt haben, koennen Sie die derzeit noch auskommentierte Codezeile aktivieren
+    public Campaign createCampaign(
+            Campaign prod) {
 //		return (Campaign) this.service.createProduct(prod);
-		return null;
-	}
+        return null;
+    }
 
-	public List<IndividualisedProductItem> readAllProducts() {
-		return (List)this.service.readAllProducts()
-				.stream()
-				.filter(prod -> prod instanceof IndividualisedProductItem)
-				.collect(Collectors.toList());
-	}
+    public List<IndividualisedProductItem> readAllProducts() {
+        return (List) this.service.readAllProducts()
+                .stream()
+                .filter(prod -> prod instanceof IndividualisedProductItem)
+                .collect(Collectors.toList());
+    }
 
-	public IndividualisedProductItem updateProduct(long id,
-			IndividualisedProductItem update) {
-		return (IndividualisedProductItem)this.service.updateProduct(id,update);
-	}
+    public IndividualisedProductItem updateProduct(long id,
+                                                   IndividualisedProductItem update) {
+        return (IndividualisedProductItem) this.service.updateProduct(id, update);
+    }
 
-	public boolean deleteProduct(long id) {
-		return this.service.deleteProduct(id);
-	}
+    public boolean deleteProduct(long id) {
+        return this.service.deleteProduct(id);
+    }
 
-	public IndividualisedProductItem readProduct(long id) {
-		IndividualisedProductItem item = (IndividualisedProductItem)this.service.readProduct(id);
-		return item;
-	}
-	
+    public IndividualisedProductItem readProduct(long id) {
+        IndividualisedProductItem item = (IndividualisedProductItem) this.service.readProduct(id);
+        return item;
+    }
+
 }

@@ -8,11 +8,11 @@ import org.apache.logging.log4j.Logger;
 @ApplicationPath("/api")
 public class RESTWebAPIRoot extends Application {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(RESTWebAPIRoot.class);
-	
-	public RESTWebAPIRoot() {
-		logger.info("<constructor>");
-	}
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(RESTWebAPIRoot.class);
+
+    public RESTWebAPIRoot() {
+        logger.info("<constructor>");
+    }
 
 // explicit declaration of resource implementation does not seem to be necessary
 //	@Override

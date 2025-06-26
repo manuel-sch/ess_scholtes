@@ -11,6 +11,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.ObjectOutputStream;
 
 import static org.dieschnittstelle.ess.utils.Utils.show;
@@ -18,43 +19,41 @@ import static org.dieschnittstelle.ess.utils.Utils.show;
 @WebServlet(urlPatterns = "/api/async/touchpoints", asyncSupported = true)
 public class TouchpointServiceServletAsync extends HttpServlet {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager
-			.getLogger(TouchpointServiceServletAsync.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager
+            .getLogger(TouchpointServiceServletAsync.class);
 
-	public TouchpointServiceServletAsync() {
-		show("TouchpointServiceServlet: constructor invoked\n");
-	}
-	
-	@Override
-	protected void doGet(HttpServletRequest request,
-			HttpServletResponse response) {
+    public TouchpointServiceServletAsync() {
+        show("TouchpointServiceServlet: constructor invoked\n");
+    }
 
-		logger.info("doGet()");
+    @Override
+    protected void doGet(HttpServletRequest request,
+                         HttpServletResponse response) {
 
-		// we need to check whether we are already running in an async context or whether a new one needs to be created
-		// in any case, dispatching needs to use the dispatch() method on the AsyncContext object rather than the request dispatcher
-		AsyncContext asyncContext = !request.isAsyncStarted()
-				? request.startAsync()
-				: request.getAsyncContext();
+        logger.info("doGet()");
 
-		new Thread(()->{
-			logger.info("doGet(): sleeping...");
-			try {
-				Thread.sleep(2000);
-			}
-			catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-			logger.info("doGet(): continuing...");
-			try {
-				asyncContext.dispatch("/api/touchpoints");
-			}
-			catch (Exception e) {
-				response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
-			}
-		}).start();
+        // we need to check whether we are already running in an async context or whether a new one needs to be created
+        // in any case, dispatching needs to use the dispatch() method on the AsyncContext object rather than the request dispatcher
+        AsyncContext asyncContext = !request.isAsyncStarted()
+                ? request.startAsync()
+                : request.getAsyncContext();
 
-	}
+        new Thread(() -> {
+            logger.info("doGet(): sleeping...");
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            logger.info("doGet(): continuing...");
+            try {
+                asyncContext.dispatch("/api/touchpoints");
+            } catch (Exception e) {
+                response.setStatus(HttpStatus.SC_INTERNAL_SERVER_ERROR);
+            }
+        }).start();
+
+    }
 	
 	/*
 	@Override	
@@ -89,5 +88,4 @@ public class TouchpointServiceServletAsync extends HttpServlet {
 	*/
 
 
-	
 }

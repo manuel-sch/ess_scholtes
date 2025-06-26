@@ -21,8 +21,7 @@ public class LaissezFairePolymorphicJacksonProvider extends ResteasyJackson2Prov
     protected static Logger logger = org.apache.logging.log4j.LogManager
             .getLogger(LaissezFairePolymorphicJacksonProvider.class);
 
-    public static class LaissezFairePolymorphicTypeValidator extends PolymorphicTypeValidator.Base
-    {
+    public static class LaissezFairePolymorphicTypeValidator extends PolymorphicTypeValidator.Base {
         @Override
         public Validity validateBaseType(MapperConfig<?> config, JavaType baseType) {
             return Validity.ALLOWED;

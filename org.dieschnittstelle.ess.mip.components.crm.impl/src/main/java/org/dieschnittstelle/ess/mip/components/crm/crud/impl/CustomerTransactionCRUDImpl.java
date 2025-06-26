@@ -14,6 +14,7 @@ import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
 import jakarta.transaction.Transactional;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,145 +27,145 @@ import java.util.List;
  */
 public class CustomerTransactionCRUDImpl implements CustomerTransactionCRUD {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager
-			.getLogger(CustomerTransactionCRUDImpl.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager
+            .getLogger(CustomerTransactionCRUDImpl.class);
 
-	@Inject
-	@EntityManagerProvider.CRMDataAccessor
-	private EntityManager em;
+    @Inject
+    @EntityManagerProvider.CRMDataAccessor
+    private EntityManager em;
 
-	@Override
-	public boolean createTransaction(CustomerTransaction transaction) {
-		// check whether the transaction fields are detached or not
-		logger.info("createTransaction(): customer attached (before): "
-				+ em.contains(transaction.getCustomer()));
-		logger.info("createTransaction(): touchpoint attached (before): "
-				+ em.contains(transaction.getTouchpoint()));
-		/*
-		 * UE JPA1.1
-		 */
-		// persist each bundle
+    @Override
+    public boolean createTransaction(CustomerTransaction transaction) {
+        // check whether the transaction fields are detached or not
+        logger.info("createTransaction(): customer attached (before): "
+                + em.contains(transaction.getCustomer()));
+        logger.info("createTransaction(): touchpoint attached (before): "
+                + em.contains(transaction.getTouchpoint()));
+        /*
+         * UE JPA1.1
+         */
+        // persist each bundle
 //		for (ShoppingCartItem item : transaction.getItems()) {
 //			logger.info("createTransaction(): will manually persist item: " + item);
 //			em.persist(item);
 //			logger.info("createTransaction(): persisted bundle: " + item);
 //		}
 
-		// persit the transaction
-		em.persist(transaction);
-				
-		return true;
-	}
+        // persit the transaction
+        em.persist(transaction);
 
-	@Override
-	public List<CustomerTransaction> readAllTransactionsForTouchpoint(
-			long touchpointId) {
-		// as there is a bidirectional association between AbstractTouchpoint and
-		// CustomerTransaction, we can also read the transactions from the touchpoint
-		// object itself
-		AbstractTouchpoint touchpoint = em.find(AbstractTouchpoint.class, touchpointId);
+        return true;
+    }
 
-		List<CustomerTransaction> trans = new ArrayList<>(touchpoint.getTransactions());
+    @Override
+    public List<CustomerTransaction> readAllTransactionsForTouchpoint(
+            long touchpointId) {
+        // as there is a bidirectional association between AbstractTouchpoint and
+        // CustomerTransaction, we can also read the transactions from the touchpoint
+        // object itself
+        AbstractTouchpoint touchpoint = em.find(AbstractTouchpoint.class, touchpointId);
 
-		logger.info("readAllTransactionsForTouchpoint(): transactions on touchpoint object are: "
-				+ touchpoint.getTransactions());
+        List<CustomerTransaction> trans = new ArrayList<>(touchpoint.getTransactions());
 
-		return trans;
-	}
+        logger.info("readAllTransactionsForTouchpoint(): transactions on touchpoint object are: "
+                + touchpoint.getTransactions());
 
-	@Override
-	public List<CustomerTransaction> readAllTransactionsForCustomer(
-			long customerId) {
-		Query query = em
-				.createQuery("SELECT DISTINCT t FROM CustomerTransaction t WHERE t.customer.id = "
-						+ customerId);
-		logger.info("readAllTransactionsForCustomer(): created query: " + query);
+        return trans;
+    }
 
-		List<CustomerTransaction> trans = query.getResultList();
-		logger.info("readAllTransactionsForCustomer(): " + trans);
-		logger.info("readAllTransactionsForCustomer(): class is: "
-				+ (trans == null ? "<null pointer>" : String.valueOf(trans
-						.getClass())));
+    @Override
+    public List<CustomerTransaction> readAllTransactionsForCustomer(
+            long customerId) {
+        Query query = em
+                .createQuery("SELECT DISTINCT t FROM CustomerTransaction t WHERE t.customer.id = "
+                        + customerId);
+        logger.info("readAllTransactionsForCustomer(): created query: " + query);
 
-		return trans;
-	}
+        List<CustomerTransaction> trans = query.getResultList();
+        logger.info("readAllTransactionsForCustomer(): " + trans);
+        logger.info("readAllTransactionsForCustomer(): class is: "
+                + (trans == null ? "<null pointer>" : String.valueOf(trans
+                .getClass())));
 
-	@Override
-	public List<CustomerTransaction> readAllTransactions() {
-		return em.createQuery("SELECT DISTINCT t FROM CustomerTransaction t").getResultList();
-	}
+        return trans;
+    }
 
-	@Override
-	public List<CustomerTransaction> readAllTransactionsForProduct(long productId) {
-		// this is an example for a jpql query using JOIN to express conditions on
-		// entities to which entities are related via a ToMany relation
-		Query query = em.createQuery("SELECT DISTINCT t FROM CustomerTransaction t JOIN t.items item WHERE item.erpProductId = " + productId);
-		return query.getResultList();
-	}
+    @Override
+    public List<CustomerTransaction> readAllTransactions() {
+        return em.createQuery("SELECT DISTINCT t FROM CustomerTransaction t").getResultList();
+    }
 
-	@Override
-	public List<Customer> readAllCustomersForProduct(long productId) {
-		// this shows a jpql query with JOIN using the structured creation of queries
-		// with CriteriaBuilder as an alternative to string concatenation
-		// (note that this functionality could also have been brought about by calling
-		// readAllTransactionsForProduct() and collection the customers from the transactions)
+    @Override
+    public List<CustomerTransaction> readAllTransactionsForProduct(long productId) {
+        // this is an example for a jpql query using JOIN to express conditions on
+        // entities to which entities are related via a ToMany relation
+        Query query = em.createQuery("SELECT DISTINCT t FROM CustomerTransaction t JOIN t.items item WHERE item.erpProductId = " + productId);
+        return query.getResultList();
+    }
 
-		// this is how the query would be created and executed using string concatenation
-		if (false) {
-			Query query = em.createQuery("SELECT DISTINCT t.customer FROM CustomerTransaction t JOIN t.items item WHERE item.erpProductId = " + productId);
-			return query.getResultList();
-		}
+    @Override
+    public List<Customer> readAllCustomersForProduct(long productId) {
+        // this shows a jpql query with JOIN using the structured creation of queries
+        // with CriteriaBuilder as an alternative to string concatenation
+        // (note that this functionality could also have been brought about by calling
+        // readAllTransactionsForProduct() and collection the customers from the transactions)
 
-		// this is the same query using the criteria builder
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+        // this is how the query would be created and executed using string concatenation
+        if (false) {
+            Query query = em.createQuery("SELECT DISTINCT t.customer FROM CustomerTransaction t JOIN t.items item WHERE item.erpProductId = " + productId);
+            return query.getResultList();
+        }
 
-		// which type of data shall be retrieved by the query?
-		CriteriaQuery<Customer> queryDescription = cb.createQuery(Customer.class);
+        // this is the same query using the criteria builder
+        CriteriaBuilder cb = em.getCriteriaBuilder();
 
-		// FROM part of the query
-		Root<CustomerTransaction> from = queryDescription.from(CustomerTransaction.class);
-		// JOIN
-		Join<CustomerTransaction, CustomerTransactionShoppingCartItem> joineditem = from.join("items");
+        // which type of data shall be retrieved by the query?
+        CriteriaQuery<Customer> queryDescription = cb.createQuery(Customer.class);
 
-		// CONDITION on the joined items, using a parameter, the value of which can be passed later on
-		// (rather than passing the value directly to the equal() condition)
-		ParameterExpression<Long> itemErpProductIdCondition = cb.parameter(Long.class);
-		queryDescription.where(cb.equal(joineditem.get("erpProductId"),itemErpProductIdCondition));
+        // FROM part of the query
+        Root<CustomerTransaction> from = queryDescription.from(CustomerTransaction.class);
+        // JOIN
+        Join<CustomerTransaction, CustomerTransactionShoppingCartItem> joineditem = from.join("items");
 
-		// SELECT part, which specifies which attribute of the selected CustomerTransactions
-		// specified in FROM will be selected for the result set
-		queryDescription.select(from.get("customer"));
-		// specify that we want to have distinct results
-		queryDescription.distinct(true);
+        // CONDITION on the joined items, using a parameter, the value of which can be passed later on
+        // (rather than passing the value directly to the equal() condition)
+        ParameterExpression<Long> itemErpProductIdCondition = cb.parameter(Long.class);
+        queryDescription.where(cb.equal(joineditem.get("erpProductId"), itemErpProductIdCondition));
 
-		TypedQuery<Customer> actualQuery = em.createQuery(queryDescription);
+        // SELECT part, which specifies which attribute of the selected CustomerTransactions
+        // specified in FROM will be selected for the result set
+        queryDescription.select(from.get("customer"));
+        // specify that we want to have distinct results
+        queryDescription.distinct(true);
 
-		// specify the parameter value for the product id
-		actualQuery.setParameter(itemErpProductIdCondition,productId);
+        TypedQuery<Customer> actualQuery = em.createQuery(queryDescription);
 
-		// execute the query
-		logger.info("running criteria query: " + actualQuery);
-		return actualQuery.getResultList();
-	}
+        // specify the parameter value for the product id
+        actualQuery.setParameter(itemErpProductIdCondition, productId);
 
-	@Override
-	public List<CustomerTransaction> readAllTransactionsForTouchpointAndCustomer(
-			long touchpointId, long customerId) {
-		Query query = em
-				.createQuery("SELECT DISTINCT t FROM CustomerTransaction t WHERE t.customer.id = "
-						+ customerId
-						+ " AND t.touchpoint.id = "
-						+ touchpointId);
-		logger.info("readAllTransactionsForTouchpointAndCustomer(): created query: "
-				+ query);
+        // execute the query
+        logger.info("running criteria query: " + actualQuery);
+        return actualQuery.getResultList();
+    }
 
-		List<CustomerTransaction> trans = query.getResultList();
-		logger.info("readAllTransactionsForTouchpointAndCustomer(): " + trans);
-		logger.info("readAllTransactionsForTouchpointAndCustomer(): class is: "
-				+ (trans == null ? "<null pointer>" : String.valueOf(trans
-						.getClass())));
+    @Override
+    public List<CustomerTransaction> readAllTransactionsForTouchpointAndCustomer(
+            long touchpointId, long customerId) {
+        Query query = em
+                .createQuery("SELECT DISTINCT t FROM CustomerTransaction t WHERE t.customer.id = "
+                        + customerId
+                        + " AND t.touchpoint.id = "
+                        + touchpointId);
+        logger.info("readAllTransactionsForTouchpointAndCustomer(): created query: "
+                + query);
 
-		return trans;
-	}
+        List<CustomerTransaction> trans = query.getResultList();
+        logger.info("readAllTransactionsForTouchpointAndCustomer(): " + trans);
+        logger.info("readAllTransactionsForTouchpointAndCustomer(): class is: "
+                + (trans == null ? "<null pointer>" : String.valueOf(trans
+                .getClass())));
+
+        return trans;
+    }
 
 }

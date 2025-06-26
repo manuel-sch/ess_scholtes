@@ -21,62 +21,62 @@ import static org.dieschnittstelle.ess.utils.Utils.show;
 @Transactional
 public class TouchpointCRUDImpl implements TouchpointCRUD {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager
-			.getLogger(TouchpointCRUDImpl.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager
+            .getLogger(TouchpointCRUDImpl.class);
 
-	@Inject
-	@EntityManagerProvider.CRMDataAccessor
-	private EntityManager em;
+    @Inject
+    @EntityManagerProvider.CRMDataAccessor
+    private EntityManager em;
 
-	/*
-	 * TODO ADD1: run CreateTouchpointsAccessingCRUD in the client project with the @TransactionAttribute commented in - what happens?
-	 */
-	@Override
-	public AbstractTouchpoint createTouchpoint(AbstractTouchpoint touchpoint) throws CrmException {
+    /*
+     * TODO ADD1: run CreateTouchpointsAccessingCRUD in the client project with the @TransactionAttribute commented in - what happens?
+     */
+    @Override
+    public AbstractTouchpoint createTouchpoint(AbstractTouchpoint touchpoint) throws CrmException {
 
-		/*
-		 * TODO ADD1: swap true/false
-		 */		
-		if (/*true*/false) {
-			throw new RuntimeException(new CrmException("Exception provoked by implementation!"));
-		} else {
-			em.persist(touchpoint);
-			return touchpoint;
-		}
+        /*
+         * TODO ADD1: swap true/false
+         */
+        if (/*true*/false) {
+            throw new RuntimeException(new CrmException("Exception provoked by implementation!"));
+        } else {
+            em.persist(touchpoint);
+            return touchpoint;
+        }
 
-	}
+    }
 
-	@Override
-	public AbstractTouchpoint readTouchpoint(long id) {
-		AbstractTouchpoint touchpoint = em.find(AbstractTouchpoint.class, id);
+    @Override
+    public AbstractTouchpoint readTouchpoint(long id) {
+        AbstractTouchpoint touchpoint = em.find(AbstractTouchpoint.class, id);
 
-		return touchpoint;
-	}
+        return touchpoint;
+    }
 
-	@Override
-	public AbstractTouchpoint updateTouchpoint(AbstractTouchpoint touchpoint) {
-		touchpoint = em.merge(touchpoint);
-		return touchpoint;
-	}
+    @Override
+    public AbstractTouchpoint updateTouchpoint(AbstractTouchpoint touchpoint) {
+        touchpoint = em.merge(touchpoint);
+        return touchpoint;
+    }
 
-	@Override
-	public boolean deleteTouchpoint(int id) {
-		em.remove(em.find(AbstractTouchpoint.class, id));
+    @Override
+    public boolean deleteTouchpoint(int id) {
+        em.remove(em.find(AbstractTouchpoint.class, id));
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public List<AbstractTouchpoint> readAllTouchpoints() {
+    @Override
+    public List<AbstractTouchpoint> readAllTouchpoints() {
 
-		show("entity manager is: " + this.em);
+        show("entity manager is: " + this.em);
 
-		Query query = em.createQuery("SELECT DISTINCT t FROM AbstractTouchpoint t");
+        Query query = em.createQuery("SELECT DISTINCT t FROM AbstractTouchpoint t");
 
-		List<AbstractTouchpoint> tps = (List<AbstractTouchpoint>) query
-				.getResultList();
+        List<AbstractTouchpoint> tps = (List<AbstractTouchpoint>) query
+                .getResultList();
 
-		return tps;
-	}
+        return tps;
+    }
 
 }

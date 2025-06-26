@@ -12,36 +12,35 @@ import java.io.InputStreamReader;
  */
 public class Utils {
 
-	protected static Logger logger = LogManager.getLogger(Utils.class);
+    protected static Logger logger = LogManager.getLogger(Utils.class);
 
-	/*
-	 * display some message, possibly using java string format
-	 */
-	public static void show(Object msg,Object... args) {
-		String formatedmsg = "------------ ";
+    /*
+     * display some message, possibly using java string format
+     */
+    public static void show(Object msg, Object... args) {
+        String formatedmsg = "------------ ";
 
-		if (msg != null && msg instanceof String && args != null && args.length > 0) {
-			formatedmsg += String.format((String)msg,args);
-		}
-		else {
-			formatedmsg += msg;
-		}
+        if (msg != null && msg instanceof String && args != null && args.length > 0) {
+            formatedmsg += String.format((String) msg, args);
+        } else {
+            formatedmsg += msg;
+        }
 
-		logger.info(formatedmsg + "\n");
-	}
+        logger.info(formatedmsg + "\n");
+    }
 
 
-	/** 
-	 * also this method is useful for demos
-	 */
-	public static void step() {
-		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			System.out.println("/>");
-			br.readLine();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+    /**
+     * also this method is useful for demos
+     */
+    public static void step() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("/>");
+            br.readLine();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 }

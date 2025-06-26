@@ -19,26 +19,26 @@ import org.dieschnittstelle.ess.entities.erp.Campaign;
 @Produces({MediaType.APPLICATION_JSON})
 public interface ProductCRUD {
 
-	@POST
-	public AbstractProduct createProduct(AbstractProduct prod);
+    @POST
+    public AbstractProduct createProduct(AbstractProduct prod);
 
-	@GET
-	public List<AbstractProduct> readAllProducts();
+    @GET
+    public List<AbstractProduct> readAllProducts();
 
-	@PUT
-	@Path("/{id}")
-	public AbstractProduct updateProduct(@PathParam("id") long productID, AbstractProduct update);
+    @PUT
+    @Path("/{id}")
+    public AbstractProduct updateProduct(@PathParam("id") long productID, AbstractProduct update);
 
-	@GET
-	@Path("/{id}")
-	public AbstractProduct readProduct(@PathParam("id") long productID);
+    @GET
+    @Path("/{id}")
+    public AbstractProduct readProduct(@PathParam("id") long productID);
 
-	@DELETE
-	@Path("/{id}")
-	public boolean deleteProduct(@PathParam("id") long productID);
+    @DELETE
+    @Path("/{id}")
+    public boolean deleteProduct(@PathParam("id") long productID);
 
-	@GET
-	@Path("/{id}/campaigns")
-	public List<Campaign> getCampaignsForProduct(@PathParam("id") long productID);
+    @GET
+    @Path("/{id}/campaigns")
+    public List<Campaign> getCampaignsForProduct(@PathParam("id") long productID);
 
 }

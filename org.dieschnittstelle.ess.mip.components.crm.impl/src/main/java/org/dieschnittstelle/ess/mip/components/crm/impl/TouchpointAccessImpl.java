@@ -21,59 +21,59 @@ import org.dieschnittstelle.ess.utils.interceptors.Logged;
 @Transactional
 public class TouchpointAccessImpl implements TouchpointAccess {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager
-			.getLogger(TouchpointAccessImpl.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager
+            .getLogger(TouchpointAccessImpl.class);
 
-	@Inject
-	private TouchpointCRUD touchpointCRUD;
+    @Inject
+    private TouchpointCRUD touchpointCRUD;
 
-	@Inject
-	private PointOfSaleCRUD posCRUD;
+    @Inject
+    private PointOfSaleCRUD posCRUD;
 
-	@Override
-	public AbstractTouchpoint createTouchpointAndPointOfSale(
-			AbstractTouchpoint touchpoint) throws CrmException {
+    @Override
+    public AbstractTouchpoint createTouchpointAndPointOfSale(
+            AbstractTouchpoint touchpoint) throws CrmException {
 //		logProductBundleKlass();
 
-		// we first create the posCRUD
-		PointOfSale pos = posCRUD.createPointOfSale(new PointOfSale());
-		logger.info("createTouchpointAndPointOfSale(): created pointOfSale: "
-				+ pos);
+        // we first create the posCRUD
+        PointOfSale pos = posCRUD.createPointOfSale(new PointOfSale());
+        logger.info("createTouchpointAndPointOfSale(): created pointOfSale: "
+                + pos);
 
-		// we pass the id to the touchpoint
-		touchpoint.setErpPointOfSaleId(pos.getId());
+        // we pass the id to the touchpoint
+        touchpoint.setErpPointOfSaleId(pos.getId());
 
-		// then we persist the touchpoint
-		touchpoint = touchpointCRUD.createTouchpoint(touchpoint);
-		logger.info("createTouchpointAndPointOfSale(): created touchpoint: "
-				+ touchpoint);
+        // then we persist the touchpoint
+        touchpoint = touchpointCRUD.createTouchpoint(touchpoint);
+        logger.info("createTouchpointAndPointOfSale(): created touchpoint: "
+                + touchpoint);
 
-		// return it
-		return touchpoint;
-	}
-	
-	// for testing class loading
-	private void logProductBundleKlass() {
-		StringBuffer log = new StringBuffer();
-		log.append(CustomerTransactionShoppingCartItem.class + "\n");
-		ClassLoader cl = CustomerTransactionShoppingCartItem.class.getClassLoader();
-		do {
-			log.append("\t"+ cl + "\n");
-			cl = cl.getParent();
-		}
-		while (cl != null);
-		
-		logger.info("class loader hierarchy of ShoppingCartItem is: \n" + log);
-	}
+        // return it
+        return touchpoint;
+    }
 
-	@Override
-	public List<AbstractTouchpoint> readAllTouchpoints() {
-		return touchpointCRUD.readAllTouchpoints();
-	}
+    // for testing class loading
+    private void logProductBundleKlass() {
+        StringBuffer log = new StringBuffer();
+        log.append(CustomerTransactionShoppingCartItem.class + "\n");
+        ClassLoader cl = CustomerTransactionShoppingCartItem.class.getClassLoader();
+        do {
+            log.append("\t" + cl + "\n");
+            cl = cl.getParent();
+        }
+        while (cl != null);
 
-	public AbstractTouchpoint readTouchpoint(long id) {
-		return touchpointCRUD.readTouchpoint(id);
-	}
+        logger.info("class loader hierarchy of ShoppingCartItem is: \n" + log);
+    }
+
+    @Override
+    public List<AbstractTouchpoint> readAllTouchpoints() {
+        return touchpointCRUD.readAllTouchpoints();
+    }
+
+    public AbstractTouchpoint readTouchpoint(long id) {
+        return touchpointCRUD.readTouchpoint(id);
+    }
 
 
 }

@@ -13,7 +13,7 @@ import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
 @Entity
 @JsonbTypeSerializer(JsonbJsonTypeInfoHandler.class)
-@Schema(name="IndividualisedProductItem")
+@Schema(name = "IndividualisedProductItem")
 public class IndividualisedProductItem extends AbstractProduct implements Serializable {
 
     protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(IndividualisedProductItem.class);

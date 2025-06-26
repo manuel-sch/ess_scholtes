@@ -4,29 +4,30 @@ import org.dieschnittstelle.ess.entities.crm.AbstractTouchpoint;
 import org.dieschnittstelle.ess.entities.crm.StationaryTouchpoint;
 
 import jakarta.ws.rs.*;
+
 import java.util.List;
 
 @Path("/touchpoints")
-@Consumes({ "application/json" })
-@Produces({ "application/json" })
+@Consumes({"application/json"})
+@Produces({"application/json"})
 public interface ITouchpointCRUDServiceClient {
-	
-	@GET
-	public List<AbstractTouchpoint> readAllTouchpoints();
 
-	@GET
-	@Path("/{touchpointId}")
-	public AbstractTouchpoint readTouchpoint(@PathParam("touchpointId") long id);
+    @GET
+    public List<AbstractTouchpoint> readAllTouchpoints();
 
-	@POST
-	public AbstractTouchpoint createTouchpoint(StationaryTouchpoint touchpoint);
-	
-	@DELETE
-	@Path("/{touchpointId}")
-	public boolean deleteTouchpoint(@PathParam("touchpointId") long id);
+    @GET
+    @Path("/{touchpointId}")
+    public AbstractTouchpoint readTouchpoint(@PathParam("touchpointId") long id);
 
-	@PUT
-	@Path("/{touchpointId}")
-	public AbstractTouchpoint updateTouchpoint(@PathParam("touchpointId") long id,AbstractTouchpoint touchpoint);
+    @POST
+    public AbstractTouchpoint createTouchpoint(StationaryTouchpoint touchpoint);
+
+    @DELETE
+    @Path("/{touchpointId}")
+    public boolean deleteTouchpoint(@PathParam("touchpointId") long id);
+
+    @PUT
+    @Path("/{touchpointId}")
+    public AbstractTouchpoint updateTouchpoint(@PathParam("touchpointId") long id, AbstractTouchpoint touchpoint);
 
 }

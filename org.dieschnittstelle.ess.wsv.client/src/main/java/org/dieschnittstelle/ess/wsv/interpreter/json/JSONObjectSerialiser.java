@@ -21,66 +21,61 @@ import org.apache.logging.log4j.Logger;
 
 public class JSONObjectSerialiser {
 
-	protected static final Logger logger = org.apache.logging.log4j.LogManager
-			.getLogger(JSONObjectSerialiser.class);
+    protected static final Logger logger = org.apache.logging.log4j.LogManager
+            .getLogger(JSONObjectSerialiser.class);
 
-	private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
-	private static final JsonFactory jsonfactory = new JsonFactory(mapper);
+    private static final JsonFactory jsonfactory = new JsonFactory(mapper);
 
-	public Object readObject(InputStream is, Type type)
-			throws ObjectMappingException {
-		try {
-			JsonNode data = null;
+    public Object readObject(InputStream is, Type type)
+            throws ObjectMappingException {
+        try {
+            JsonNode data = null;
 
-			// we only make a very rough distinction between maprimitives, arrays (possibly parameterised) and objects
-			// parameterised types here
-			
-			if (type == Boolean.TYPE) {
-				data = mapper.readValue(is, BooleanNode.class);
-			}
-			else if (type == Integer.TYPE || type == Long.TYPE || type == Double.TYPE) {
-				data = mapper.readValue(is, NumericNode.class);
-			}
-			else if (type == String.class) {
-				data = mapper.readValue(is, TextNode.class);
-			}
-			else if (type instanceof ParameterizedType) {
-				if (Collection.class
-						.isAssignableFrom((Class) ((ParameterizedType) type)
-								.getRawType())) {
-					data = mapper.readValue(is, ArrayNode.class);
-				}
-				else {
-					data = mapper.readValue(is, ObjectNode.class);
-				}
-			} else {
-				if (Collection.class
-						.isAssignableFrom((Class) type)) {
-					data = mapper.readValue(is, ArrayNode.class);
-				}
-				else {
-					data = mapper.readValue(is, ObjectNode.class);
-				}
-			}
-			logger.info("read data: " + data);
+            // we only make a very rough distinction between maprimitives, arrays (possibly parameterised) and objects
+            // parameterised types here
 
-			return JSONObjectMapper.getInstance().fromjson(data, type);
-		} catch (Exception e) {
-			throw new ObjectMappingException(e);
-		}
-	}
+            if (type == Boolean.TYPE) {
+                data = mapper.readValue(is, BooleanNode.class);
+            } else if (type == Integer.TYPE || type == Long.TYPE || type == Double.TYPE) {
+                data = mapper.readValue(is, NumericNode.class);
+            } else if (type == String.class) {
+                data = mapper.readValue(is, TextNode.class);
+            } else if (type instanceof ParameterizedType) {
+                if (Collection.class
+                        .isAssignableFrom((Class) ((ParameterizedType) type)
+                                .getRawType())) {
+                    data = mapper.readValue(is, ArrayNode.class);
+                } else {
+                    data = mapper.readValue(is, ObjectNode.class);
+                }
+            } else {
+                if (Collection.class
+                        .isAssignableFrom((Class) type)) {
+                    data = mapper.readValue(is, ArrayNode.class);
+                } else {
+                    data = mapper.readValue(is, ObjectNode.class);
+                }
+            }
+            logger.info("read data: " + data);
 
-	public void writeObject(Object obj, OutputStream os)
-			throws ObjectMappingException {
-		try {
-			JsonGenerator generator = jsonfactory.createGenerator(os,
-					JsonEncoding.UTF8);
+            return JSONObjectMapper.getInstance().fromjson(data, type);
+        } catch (Exception e) {
+            throw new ObjectMappingException(e);
+        }
+    }
 
-			generator.writeObject(JSONObjectMapper.getInstance().tojson(obj));
-		} catch (Exception e) {
-			throw new ObjectMappingException(e);
-		}
-	}
+    public void writeObject(Object obj, OutputStream os)
+            throws ObjectMappingException {
+        try {
+            JsonGenerator generator = jsonfactory.createGenerator(os,
+                    JsonEncoding.UTF8);
+
+            generator.writeObject(JSONObjectMapper.getInstance().tojson(obj));
+        } catch (Exception e) {
+            throw new ObjectMappingException(e);
+        }
+    }
 
 }

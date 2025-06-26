@@ -18,37 +18,37 @@ import java.util.List;
 @Produces({MediaType.APPLICATION_JSON})
 public interface StockSystemService {
 
-	/**
-	 * adds some units of a product to the stock of a point of sale
-	 */
-	@POST
+    /**
+     * adds some units of a product to the stock of a point of sale
+     */
+    @POST
     void addToStock(@QueryParam("productId") long productId, @QueryParam("pointOfSaleId") long pointOfSaleId, @QueryParam("units") int units);
 
-	/**
-	 * removes some units of a product from the stock of a point of sale
-	 */
-	@DELETE
-	void removeFromStock(@QueryParam("productId") long productId, @QueryParam("pointOfSaleId") long pointOfSaleId, @QueryParam("units") int units);
+    /**
+     * removes some units of a product from the stock of a point of sale
+     */
+    @DELETE
+    void removeFromStock(@QueryParam("productId") long productId, @QueryParam("pointOfSaleId") long pointOfSaleId, @QueryParam("units") int units);
 
-	/**
-	 * returns all products on stock or, if pointOfSaleId is specified, the products for some pointOfSale
-	 */
-	@Path("/products")
-	@GET
+    /**
+     * returns all products on stock or, if pointOfSaleId is specified, the products for some pointOfSale
+     */
+    @Path("/products")
+    @GET
     List<IndividualisedProductItem> getProductsOnStock(@QueryParam("pointOfSaleId") long pointOfSaleId);
 
-	/**
-	 * returns the units on stock for a given product overall or, if a pointOfSaleId is specified, at some point of sale
-	 */
-	@Path("/products/{productId}/units")
-	@GET
+    /**
+     * returns the units on stock for a given product overall or, if a pointOfSaleId is specified, at some point of sale
+     */
+    @Path("/products/{productId}/units")
+    @GET
     int getUnitsOnStock(@PathParam("productId") long productId, @QueryParam("pointOfSaleId") long pointOfSaleId);
 
-	/**
-	 * returns the points of sale where some product is available
-	 */
-	@Path("/products/{productId}/points-of-sale")
-	@GET
+    /**
+     * returns the points of sale where some product is available
+     */
+    @Path("/products/{productId}/points-of-sale")
+    @GET
     List<Long> getPointsOfSale(@PathParam("productId") long productId);
 
 }

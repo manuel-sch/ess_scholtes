@@ -107,7 +107,7 @@ public class JAXRSClientInterpreter implements InvocationHandler {
         // add a header on the request declaring that we accept json (for header names, you can use the constants declared in jakarta.ws.rs.core.HttpHeaders, for content types use the constants from jakarta.ws.rs.core.MediaType;)
         request.setHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON);
 
-        if (requestBodyData != null){
+        if (requestBodyData != null) {
             attachRequestBody(request, requestBodyData);
             request.setHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON);
         }

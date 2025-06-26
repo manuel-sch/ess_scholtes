@@ -32,16 +32,16 @@
                 <groupId>org.apache.tomee.maven</groupId>
                 <artifactId>tomee-maven-plugin</artifactId>
                 <version>${version.tomee.plugin}</version>
-<!-- SKIP PACKAGING EXECUTABLE JARS AS THIS SLOWS DOWN THE BUILD PROCESS AND AS JAR EXECUTION IS NOT USED ANYMORE -->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>executable-jar</id>-->
-<!--                        <goals>-->
-<!--                            <goal>exec</goal>-->
-<!--                        </goals>-->
-<!--                        <phase>package</phase>-->
-<!--                    </execution>-->
-<!--                </executions>-->
+                <!-- SKIP PACKAGING EXECUTABLE JARS AS THIS SLOWS DOWN THE BUILD PROCESS AND AS JAR EXECUTION IS NOT USED ANYMORE -->
+                <!--                <executions>-->
+                <!--                    <execution>-->
+                <!--                        <id>executable-jar</id>-->
+                <!--                        <goals>-->
+                <!--                            <goal>exec</goal>-->
+                <!--                        </goals>-->
+                <!--                        <phase>package</phase>-->
+                <!--                    </execution>-->
+                <!--                </executions>-->
                 <configuration>
                     <context>ROOT</context>
                     <tomeeVersion>${version.tomee.server}</tomeeVersion>

@@ -6,60 +6,60 @@ import static org.dieschnittstelle.ess.utils.Utils.*;
 
 public class Chocolate implements IStockItem {
 
-	private int units;
-	
-	private String brandname;
-	
-	private int price;
-	
-	public Chocolate() {
-		show("Chocolate: constructor invoked");
-	}
-	
-	public Chocolate(String brandname) {
-		this.brandname = brandname;
-	}
-	
-	
-	@Override
-	public void initialise(int units,String brandname) {
-		show("Chocolate: intialise() invoked");
+    private int units;
 
-		this.units = units;
-		this.brandname = brandname;
-	}
+    private String brandname;
 
-	@Override
-	public int getUnits() {
-		return this.units;
-	}
+    private int price;
 
-	@Override
-	public void setUnits(int units) {
-		this.units = units;
-	}
+    public Chocolate() {
+        show("Chocolate: constructor invoked");
+    }
 
-	@Override
-	public String toString() {
-		return String.format("<Chocolate %s %d %d>", this.brandname, this.units, this.price);
-	}
+    public Chocolate(String brandname) {
+        this.brandname = brandname;
+    }
 
-	public String getBrandname() {
-		return brandname;
-	}
 
-	public void setBrandname(String brandname) {
-		this.brandname = brandname;
-	}
+    @Override
+    public void initialise(int units, String brandname) {
+        show("Chocolate: intialise() invoked");
 
-	public int getPrice() {
-		return price;
-	}
+        this.units = units;
+        this.brandname = brandname;
+    }
 
-	public void setPrice(int price) {
-		show("Chocolate: setPrice() invoked");
+    @Override
+    public int getUnits() {
+        return this.units;
+    }
 
-		this.price = price;
-	}
+    @Override
+    public void setUnits(int units) {
+        this.units = units;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("<Chocolate %s %d %d>", this.brandname, this.units, this.price);
+    }
+
+    public String getBrandname() {
+        return brandname;
+    }
+
+    public void setBrandname(String brandname) {
+        this.brandname = brandname;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        show("Chocolate: setPrice() invoked");
+
+        this.price = price;
+    }
 
 }

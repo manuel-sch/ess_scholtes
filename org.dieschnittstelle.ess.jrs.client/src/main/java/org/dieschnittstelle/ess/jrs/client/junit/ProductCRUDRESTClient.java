@@ -18,39 +18,39 @@ import static org.dieschnittstelle.ess.utils.Utils.show;
 
 public class ProductCRUDRESTClient {
 
-	private IProductCRUDService serviceProxy;
-	
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductCRUDRESTClient.class);
+    private IProductCRUDService serviceProxy;
 
-	boolean async = false;
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ProductCRUDRESTClient.class);
 
-	public static void main(String[] args) {
-		ProductCRUDRESTClient client = new ProductCRUDRESTClient();
-		// 1) read out all products
-		List<IndividualisedProductItem> products = (List<IndividualisedProductItem>) client.readAllProducts();
-		logger.info("read products: " + products);
-	}
+    boolean async = false;
 
-	public ProductCRUDRESTClient() {
-		/*
-		 * TODO: JRS2: create a client for the web service using ResteasyClientBuilder and ResteasyWebTarget
-		 */
-		Client client = ClientBuilder.newBuilder()
-				.build()
-				.register(LaissezFairePolymorphicJacksonProvider.class);
-		ResteasyWebTarget target = (ResteasyWebTarget)client.target("http://localhost:8080/api/" + (async ? "async/" : ""));
-		serviceProxy = target.proxy(IProductCRUDService.class);
-		show("ProductCRUDRESTClient(): serviceProxy: " + serviceProxy + " of class: " + serviceProxy.getClass());
-	}
+    public static void main(String[] args) {
+        ProductCRUDRESTClient client = new ProductCRUDRESTClient();
+        // 1) read out all products
+        List<IndividualisedProductItem> products = (List<IndividualisedProductItem>) client.readAllProducts();
+        logger.info("read products: " + products);
+    }
 
-	public AbstractProduct createProduct(IndividualisedProductItem prod) {
-		AbstractProduct created = serviceProxy.createProduct(prod);
-		// as a side-effect we set the id of the created product on the argument before returning
-		prod.setId(created.getId());
-		return created;
-	}
+    public ProductCRUDRESTClient() {
+        /*
+         * TODO: JRS2: create a client for the web service using ResteasyClientBuilder and ResteasyWebTarget
+         */
+        Client client = ClientBuilder.newBuilder()
+                .build()
+                .register(LaissezFairePolymorphicJacksonProvider.class);
+        ResteasyWebTarget target = (ResteasyWebTarget) client.target("http://localhost:8080/api/" + (async ? "async/" : ""));
+        serviceProxy = target.proxy(IProductCRUDService.class);
+        show("ProductCRUDRESTClient(): serviceProxy: " + serviceProxy + " of class: " + serviceProxy.getClass());
+    }
 
-	// TODO: activate this method for testing JRS3
+    public AbstractProduct createProduct(IndividualisedProductItem prod) {
+        AbstractProduct created = serviceProxy.createProduct(prod);
+        // as a side-effect we set the id of the created product on the argument before returning
+        prod.setId(created.getId());
+        return created;
+    }
+
+    // TODO: activate this method for testing JRS3
 //	public AbstractProduct createCampaign(AbstractProduct prod) {
 //		AbstractProduct created = serviceProxy.createProduct(prod);
 //		// as a side-effect we set the id of the created product on the argument before returning
@@ -58,20 +58,20 @@ public class ProductCRUDRESTClient {
 //		return created;
 //	}
 
-	public List<?> readAllProducts() {
-		return serviceProxy.readAllProducts();
-	}
+    public List<?> readAllProducts() {
+        return serviceProxy.readAllProducts();
+    }
 
-	public AbstractProduct updateProduct(AbstractProduct update) {
-		return serviceProxy.updateProduct(update.getId(),(IndividualisedProductItem)update);
-	}
+    public AbstractProduct updateProduct(AbstractProduct update) {
+        return serviceProxy.updateProduct(update.getId(), (IndividualisedProductItem) update);
+    }
 
-	public boolean deleteProduct(long id) {
-		return serviceProxy.deleteProduct(id);
-	}
+    public boolean deleteProduct(long id) {
+        return serviceProxy.deleteProduct(id);
+    }
 
-	public AbstractProduct readProduct(long id) {
-		return serviceProxy.readProduct(id);
-	}
+    public AbstractProduct readProduct(long id) {
+        return serviceProxy.readProduct(id);
+    }
 
 }

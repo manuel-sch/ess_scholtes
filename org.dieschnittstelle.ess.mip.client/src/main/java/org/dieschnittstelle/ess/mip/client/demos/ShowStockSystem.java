@@ -17,96 +17,95 @@ import static org.dieschnittstelle.ess.utils.Utils.*;
 
 public class ShowStockSystem {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ShowStockSystem.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ShowStockSystem.class);
 
-	public static void main(String[] args) {
-		ServiceProxyFactory.initialise();
+    public static void main(String[] args) {
+        ServiceProxyFactory.initialise();
 
-		try {
-			(new ShowStockSystem()).runAll();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	// declare the attributes that will be instantiated with the service clients
-	private ProductCRUDClient productCRUD;
-	private StockSystemClient stockSystemClient;
-	private TouchpointAccessClient touchpointCRUD;
-	
-	public ShowStockSystem() throws Exception {
-		instantiateClients();
-	}
-	
-	public void runAll() {
+        try {
+            (new ShowStockSystem()).runAll();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-		try {
-			createProducts();
-			createTouchpoints();
-			createStock();
-			showStock();
-		} catch (Exception e) {
-			logger.error("got exception: " + e, e);
-		}
-	}
+    // declare the attributes that will be instantiated with the service clients
+    private ProductCRUDClient productCRUD;
+    private StockSystemClient stockSystemClient;
+    private TouchpointAccessClient touchpointCRUD;
 
-	private void showStock() {
-		show("poss for prod1: " + stockSystemClient.getPointsOfSale(PRODUCT_1));
-		show("poss for prod2: " + stockSystemClient.getPointsOfSale(PRODUCT_2));
-		show("total units prod1: " + stockSystemClient.getTotalUnitsOnStock(PRODUCT_1));
-		show("total units prod2: " + stockSystemClient.getTotalUnitsOnStock(PRODUCT_2));
-	}
+    public ShowStockSystem() throws Exception {
+        instantiateClients();
+    }
 
-	public void instantiateClients() throws Exception {
-		// instantiate the clients
-		productCRUD = new ProductCRUDClient();
-		stockSystemClient = new StockSystemClient();
-		touchpointCRUD = new TouchpointAccessClient();
-		
-		System.out.println("\n***************** instantiated clients\n");
-	}
+    public void runAll() {
 
-	public void createProducts() {
-		// create products
-		productCRUD.createProduct(PRODUCT_1);
-		Utils.step();
-		productCRUD.createProduct(PRODUCT_2);
-		//productCRUD.createProduct(CAMPAIGN_1);
-		//productCRUD.createProduct(CAMPAIGN_2);
-		
-		show("created products: " + PRODUCT_1 + ", " + PRODUCT_2);
-		show("all products: " + productCRUD.readAllProducts());
-		
-		Utils.step();
+        try {
+            createProducts();
+            createTouchpoints();
+            createStock();
+            showStock();
+        } catch (Exception e) {
+            logger.error("got exception: " + e, e);
+        }
+    }
 
-		System.out.println("\n***************** created products\n");
-	}
+    private void showStock() {
+        show("poss for prod1: " + stockSystemClient.getPointsOfSale(PRODUCT_1));
+        show("poss for prod2: " + stockSystemClient.getPointsOfSale(PRODUCT_2));
+        show("total units prod1: " + stockSystemClient.getTotalUnitsOnStock(PRODUCT_1));
+        show("total units prod2: " + stockSystemClient.getTotalUnitsOnStock(PRODUCT_2));
+    }
 
-	public void createTouchpoints() {
-		// create touchpoints
-		try {
-			touchpointCRUD.createTouchpointAndPointOfSale(TOUCHPOINT_1);
-			touchpointCRUD.createTouchpointAndPointOfSale(TOUCHPOINT_2);
+    public void instantiateClients() throws Exception {
+        // instantiate the clients
+        productCRUD = new ProductCRUDClient();
+        stockSystemClient = new StockSystemClient();
+        touchpointCRUD = new TouchpointAccessClient();
 
-			System.out.println("\n***************** created touchpoints\n");
-		}
-		catch (CrmException e) {
-			throw new RuntimeException("createTouchpoints(): got exception: " + e,e);
-		}
-	}
-	
-	public void createStock() {
-		// create stock
-		stockSystemClient.addToStock(PRODUCT_1,
-				TOUCHPOINT_1.getErpPointOfSaleId(), 100);
-		stockSystemClient.addToStock(PRODUCT_1,
-				TOUCHPOINT_2.getErpPointOfSaleId(), 90);
-		stockSystemClient.addToStock(PRODUCT_2,
-				TOUCHPOINT_1.getErpPointOfSaleId(), 80);
+        System.out.println("\n***************** instantiated clients\n");
+    }
+
+    public void createProducts() {
+        // create products
+        productCRUD.createProduct(PRODUCT_1);
+        Utils.step();
+        productCRUD.createProduct(PRODUCT_2);
+        //productCRUD.createProduct(CAMPAIGN_1);
+        //productCRUD.createProduct(CAMPAIGN_2);
+
+        show("created products: " + PRODUCT_1 + ", " + PRODUCT_2);
+        show("all products: " + productCRUD.readAllProducts());
+
+        Utils.step();
+
+        System.out.println("\n***************** created products\n");
+    }
+
+    public void createTouchpoints() {
+        // create touchpoints
+        try {
+            touchpointCRUD.createTouchpointAndPointOfSale(TOUCHPOINT_1);
+            touchpointCRUD.createTouchpointAndPointOfSale(TOUCHPOINT_2);
+
+            System.out.println("\n***************** created touchpoints\n");
+        } catch (CrmException e) {
+            throw new RuntimeException("createTouchpoints(): got exception: " + e, e);
+        }
+    }
+
+    public void createStock() {
+        // create stock
+        stockSystemClient.addToStock(PRODUCT_1,
+                TOUCHPOINT_1.getErpPointOfSaleId(), 100);
+        stockSystemClient.addToStock(PRODUCT_1,
+                TOUCHPOINT_2.getErpPointOfSaleId(), 90);
+        stockSystemClient.addToStock(PRODUCT_2,
+                TOUCHPOINT_1.getErpPointOfSaleId(), 80);
 //		stockSystemClient.addToStock(PRODUCT_2,
 //				TOUCHPOINT_2.getErpPointOfSaleId(), 100);
 
-		System.out.println("\n***************** created stock\n");
-	}
+        System.out.println("\n***************** created stock\n");
+    }
 
 }

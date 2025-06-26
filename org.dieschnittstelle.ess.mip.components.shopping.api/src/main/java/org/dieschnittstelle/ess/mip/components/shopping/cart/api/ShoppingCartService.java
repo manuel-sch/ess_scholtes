@@ -4,6 +4,7 @@ import org.dieschnittstelle.ess.entities.shopping.ShoppingCartItem;
 
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+
 import java.util.List;
 
 /**

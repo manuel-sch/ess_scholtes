@@ -43,9 +43,9 @@ public interface StockItemCRUD {
 
     /*
      * here you can create a Query using the id of the prod object -
-	 * see readAllTransactionsForTouchpointAndCustomer() in
-	 * CustomerTransactionCRUDImpl (in .mip.components.crm.impl) as an
-	 * example
+     * see readAllTransactionsForTouchpointAndCustomer() in
+     * CustomerTransactionCRUDImpl (in .mip.components.crm.impl) as an
+     * example
      */
     public List<StockItem> readStockItemsForProduct(IndividualisedProductItem prod);
 

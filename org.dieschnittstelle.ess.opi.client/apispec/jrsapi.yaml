@@ -34,12 +34,12 @@ paths:
     get:
       operationId: readTouchpoint
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          format: int64
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         "200":
           description: OK
@@ -50,12 +50,12 @@ paths:
     delete:
       operationId: deleteTouchpoint
       parameters:
-      - name: id
-        in: path
-        required: true
-        schema:
-          format: int64
-          type: integer
+        - name: id
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         "200":
           description: OK
@@ -90,12 +90,12 @@ paths:
   /api/touchpoints/{touchpointId}:
     get:
       parameters:
-      - name: touchpointId
-        in: path
-        required: true
-        schema:
-          format: int64
-          type: integer
+        - name: touchpointId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         "200":
           description: OK
@@ -105,12 +105,12 @@ paths:
                 $ref: '#/components/schemas/StationaryTouchpoint'
     delete:
       parameters:
-      - name: touchpointId
-        in: path
-        required: true
-        schema:
-          format: int64
-          type: integer
+        - name: touchpointId
+          in: path
+          required: true
+          schema:
+            format: int64
+            type: integer
       responses:
         "200":
           description: OK

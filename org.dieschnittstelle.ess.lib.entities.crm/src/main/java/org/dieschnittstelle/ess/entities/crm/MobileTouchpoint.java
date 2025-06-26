@@ -20,73 +20,73 @@ import org.apache.logging.log4j.Logger;
 @DiscriminatorValue("mobile")
 public class MobileTouchpoint extends AbstractTouchpoint {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(MobileTouchpoint.class);
-	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3020587110269172721L;
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(MobileTouchpoint.class);
 
-	@ElementCollection
-	private Collection<String> mobilePhoneIds = new HashSet<String>();
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3020587110269172721L;
 
-	public MobileTouchpoint() {
-		logger.debug("<constructor>");
-	}
+    @ElementCollection
+    private Collection<String> mobilePhoneIds = new HashSet<String>();
 
-	public MobileTouchpoint(String mobilePhoneId) {
-		this.addMobilePhoneId(mobilePhoneId);
-	}
+    public MobileTouchpoint() {
+        logger.debug("<constructor>");
+    }
 
-	public Collection<String> getMobilePhoneIds() {
-		return mobilePhoneIds;
-	}
+    public MobileTouchpoint(String mobilePhoneId) {
+        this.addMobilePhoneId(mobilePhoneId);
+    }
 
-	public void addMobilePhoneId(String mobilePhoneId) {
-		this.mobilePhoneIds.add(mobilePhoneId);
-	}
+    public Collection<String> getMobilePhoneIds() {
+        return mobilePhoneIds;
+    }
 
-	public String toString() {
-		return "<MobileTouchpoint " + this.id + "/" + this.erpPointOfSaleId + " " + this.mobilePhoneIds + ">";
-	}
+    public void addMobilePhoneId(String mobilePhoneId) {
+        this.mobilePhoneIds.add(mobilePhoneId);
+    }
 
-	/*
-	 * lifecycle logging
-	 */
-	
-	@PostLoad
-	public void onPostLoad() {
-		logger.info("@PostLoad: " + this);
-	}
-	
-	@PostPersist
-	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);		
-	}
-	
-	@PostRemove
-	public void onPostRemove() {
-		logger.info("@PostRemove: " + this);
-	}
+    public String toString() {
+        return "<MobileTouchpoint " + this.id + "/" + this.erpPointOfSaleId + " " + this.mobilePhoneIds + ">";
+    }
 
-	@PostUpdate
-	public void onPostUpdate() {
-		logger.info("@PostUpdate: " + this);
-	}
-	
-	@PrePersist
-	public void onPrePersist() {
-		logger.info("@PrePersist: " + this);
-	}
+    /*
+     * lifecycle logging
+     */
 
-	@PreRemove
-	public void onPreRemove() {
-		logger.info("@PreRemove: " + this);
-	}
+    @PostLoad
+    public void onPostLoad() {
+        logger.info("@PostLoad: " + this);
+    }
 
-	@PreUpdate
-	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);		
-	}
-	
+    @PostPersist
+    public void onPostPersist() {
+        logger.info("@PostPersist: " + this);
+    }
+
+    @PostRemove
+    public void onPostRemove() {
+        logger.info("@PostRemove: " + this);
+    }
+
+    @PostUpdate
+    public void onPostUpdate() {
+        logger.info("@PostUpdate: " + this);
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        logger.info("@PrePersist: " + this);
+    }
+
+    @PreRemove
+    public void onPreRemove() {
+        logger.info("@PreRemove: " + this);
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        logger.info("@PreUpdate: " + this);
+    }
+
 }

@@ -8,29 +8,29 @@ import org.dieschnittstelle.ess.entities.crm.CustomerTransaction;
 
 public class CustomerTrackingClient implements CustomerTracking {
 
-	private CustomerTracking serviceProxy;
-	
-	public CustomerTrackingClient() throws Exception {
-		serviceProxy = ServiceProxyFactory.getInstance().getProxy(CustomerTracking.class);
-	}
-	
-	@Override
-	public void createTransaction(CustomerTransaction transaction) {
-		serviceProxy.createTransaction(transaction);
-	}
+    private CustomerTracking serviceProxy;
 
-	@Override
-	public List<CustomerTransaction> readTransactions(long touchpointId, long customerId) {
-		return serviceProxy.readTransactions(touchpointId,customerId);
-	}
+    public CustomerTrackingClient() throws Exception {
+        serviceProxy = ServiceProxyFactory.getInstance().getProxy(CustomerTracking.class);
+    }
 
-	@Override
-	public List<CustomerTransaction> readTransactionsForProduct(long productId) {
-		return serviceProxy.readTransactionsForProduct(productId);
-	}
+    @Override
+    public void createTransaction(CustomerTransaction transaction) {
+        serviceProxy.createTransaction(transaction);
+    }
 
-	@Override
-	public List<Customer> readAllCustomersForProduct(long productId) {
-		return serviceProxy.readAllCustomersForProduct(productId);
-	}
+    @Override
+    public List<CustomerTransaction> readTransactions(long touchpointId, long customerId) {
+        return serviceProxy.readTransactions(touchpointId, customerId);
+    }
+
+    @Override
+    public List<CustomerTransaction> readTransactionsForProduct(long productId) {
+        return serviceProxy.readTransactionsForProduct(productId);
+    }
+
+    @Override
+    public List<Customer> readAllCustomersForProduct(long productId) {
+        return serviceProxy.readAllCustomersForProduct(productId);
+    }
 }

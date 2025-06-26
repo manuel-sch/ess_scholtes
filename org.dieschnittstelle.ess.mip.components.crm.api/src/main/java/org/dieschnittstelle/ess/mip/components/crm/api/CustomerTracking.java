@@ -13,20 +13,20 @@ import org.dieschnittstelle.ess.entities.crm.CustomerTransaction;
 @Consumes({MediaType.APPLICATION_JSON})
 public interface CustomerTracking {
 
-	@POST
-	public void createTransaction(CustomerTransaction transaction);
+    @POST
+    public void createTransaction(CustomerTransaction transaction);
 
-	@GET
-	@Path("/transactions-for-touchpoint-and-customer")
-	public List<CustomerTransaction> readTransactions(@QueryParam("touchpointId") long touchpointId,@QueryParam("customerId") long customerId);
+    @GET
+    @Path("/transactions-for-touchpoint-and-customer")
+    public List<CustomerTransaction> readTransactions(@QueryParam("touchpointId") long touchpointId, @QueryParam("customerId") long customerId);
 
-	@GET
-	@Path("/transactions-for-product")
-	public List<CustomerTransaction> readTransactionsForProduct(@QueryParam("productId") long productId);
+    @GET
+    @Path("/transactions-for-product")
+    public List<CustomerTransaction> readTransactionsForProduct(@QueryParam("productId") long productId);
 
-	@GET
-	@Path("/customers-for-product")
-	public List<Customer> readAllCustomersForProduct(@QueryParam("productId") long productId);
+    @GET
+    @Path("/customers-for-product")
+    public List<Customer> readAllCustomersForProduct(@QueryParam("productId") long productId);
 
 
 }

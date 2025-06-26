@@ -6,6 +6,7 @@ import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
 
 import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.*;
+
 import java.io.Serializable;
 
 /**
@@ -15,128 +16,128 @@ import java.io.Serializable;
 @Entity
 public class ShoppingCartItem implements Serializable {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ShoppingCartItem.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(ShoppingCartItem.class);
 
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 5027719621777767575L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 5027719621777767575L;
 
-	@Id
-	@GeneratedValue
-	private long id;
+    @Id
+    @GeneratedValue
+    private long id;
 
-	private long erpProductId;
+    private long erpProductId;
 
-	private int units;
+    private int units;
 
-	private boolean isCampaign;
-	
-	@Transient
-	@JsonIgnore
-	@JsonbTransient
-	private AbstractProduct productObj;
-	
-	public ShoppingCartItem() {
-		logger.debug("<constructor>");
-	}
-	
-	public ShoppingCartItem(long erpProductId, int units) {
-		this(erpProductId, units, false);
-	}
+    private boolean isCampaign;
 
-	public ShoppingCartItem(long erpProductId, int units, boolean isCampaign) {
-		this.erpProductId = erpProductId;
-		this.units = units;
-		this.isCampaign = isCampaign;
-	}
+    @Transient
+    @JsonIgnore
+    @JsonbTransient
+    private AbstractProduct productObj;
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public ShoppingCartItem() {
+        logger.debug("<constructor>");
+    }
 
-	public void setErpProductId(long erpProductId) {
-		this.erpProductId = erpProductId;
-	}
+    public ShoppingCartItem(long erpProductId, int units) {
+        this(erpProductId, units, false);
+    }
 
-	public void setCampaign(boolean campaign) {
-		isCampaign = campaign;
-	}
+    public ShoppingCartItem(long erpProductId, int units, boolean isCampaign) {
+        this.erpProductId = erpProductId;
+        this.units = units;
+        this.isCampaign = isCampaign;
+    }
 
-	public long getId() {
-		return id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public long getErpProductId() {
-		return erpProductId;
-	}
+    public void setErpProductId(long erpProductId) {
+        this.erpProductId = erpProductId;
+    }
 
-	public int getUnits() {
-		return units;
-	}
-	
-	public void setUnits(int units) {
-		this.units = units;
-	}
+    public void setCampaign(boolean campaign) {
+        isCampaign = campaign;
+    }
 
-	public boolean isCampaign() {
-		return isCampaign;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public String toString() {
-		return "<ShoppingCartItem " + this.id + " (" + this.erpProductId + ":"
-				+ this.units + ")>";
-	}
+    public long getErpProductId() {
+        return erpProductId;
+    }
 
-	/*
-	 * lifecycle logging
-	 */
+    public int getUnits() {
+        return units;
+    }
 
-	@PostLoad
-	public void onPostLoad() {
-		logger.info("@PostLoad: " + this);
-	}
+    public void setUnits(int units) {
+        this.units = units;
+    }
 
-	@PostPersist
-	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);
-	}
+    public boolean isCampaign() {
+        return isCampaign;
+    }
 
-	@PostRemove
-	public void onPostRemove() {
-		logger.info("@PostRemove: " + this);
-	}
+    public String toString() {
+        return "<ShoppingCartItem " + this.id + " (" + this.erpProductId + ":"
+                + this.units + ")>";
+    }
 
-	@PostUpdate
-	public void onPostUpdate() {
-		logger.info("@PostUpdate: " + this);
-	}
+    /*
+     * lifecycle logging
+     */
 
-	@PrePersist
-	public void onPrePersist() {
-		logger.info("@PrePersist: " + this);
-	}
+    @PostLoad
+    public void onPostLoad() {
+        logger.info("@PostLoad: " + this);
+    }
 
-	@PreRemove
-	public void onPreRemove() {
-		logger.info("@PreRemove: " + this);
-	}
+    @PostPersist
+    public void onPostPersist() {
+        logger.info("@PostPersist: " + this);
+    }
 
-	@PreUpdate
-	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);
-	}
+    @PostRemove
+    public void onPostRemove() {
+        logger.info("@PostRemove: " + this);
+    }
 
-	public AbstractProduct getProductObj() {
-		if (productObj == null) {
-			throw new RuntimeException("ShoppingCartItem.productObj is transient and has not been set! Use erpProductId to access product.");
-		}
-		return productObj;
-	}
+    @PostUpdate
+    public void onPostUpdate() {
+        logger.info("@PostUpdate: " + this);
+    }
 
-	public void setProductObj(AbstractProduct productObj) {
-		this.productObj = productObj;
-	}
+    @PrePersist
+    public void onPrePersist() {
+        logger.info("@PrePersist: " + this);
+    }
+
+    @PreRemove
+    public void onPreRemove() {
+        logger.info("@PreRemove: " + this);
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        logger.info("@PreUpdate: " + this);
+    }
+
+    public AbstractProduct getProductObj() {
+        if (productObj == null) {
+            throw new RuntimeException("ShoppingCartItem.productObj is transient and has not been set! Use erpProductId to access product.");
+        }
+        return productObj;
+    }
+
+    public void setProductObj(AbstractProduct productObj) {
+        this.productObj = productObj;
+    }
 
 }

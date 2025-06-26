@@ -8,32 +8,32 @@ import org.dieschnittstelle.ess.entities.crm.CampaignExecution;
 
 public class CampaignTrackingClient implements CampaignTracking {
 
-	private CampaignTracking serviceProxy;
-	
-	public CampaignTrackingClient() throws Exception {
-		serviceProxy = ServiceProxyFactory.getInstance().getProxy(CampaignTracking.class);
-	}
-	
-	@Override
-	public void addCampaignExecution(CampaignExecution campaign) {
-		serviceProxy.addCampaignExecution(campaign);
-	}
+    private CampaignTracking serviceProxy;
 
-	@Override
-	public int existsValidCampaignExecutionAtTouchpoint(long erpProductId,
-			AbstractTouchpoint tp) {
-		return serviceProxy.existsValidCampaignExecutionAtTouchpoint(erpProductId, tp);
-	}
+    public CampaignTrackingClient() throws Exception {
+        serviceProxy = ServiceProxyFactory.getInstance().getProxy(CampaignTracking.class);
+    }
 
-	@Override
-	public void purchaseCampaignAtTouchpoint(long erpProductId,
-			AbstractTouchpoint tp, int units) {
-		serviceProxy.purchaseCampaignAtTouchpoint(erpProductId, tp, units);
-	}
+    @Override
+    public void addCampaignExecution(CampaignExecution campaign) {
+        serviceProxy.addCampaignExecution(campaign);
+    }
 
-	@Override
-	public List<CampaignExecution> getAllCampaignExecutions() {
-		return serviceProxy.getAllCampaignExecutions();
-	}
+    @Override
+    public int existsValidCampaignExecutionAtTouchpoint(long erpProductId,
+                                                        AbstractTouchpoint tp) {
+        return serviceProxy.existsValidCampaignExecutionAtTouchpoint(erpProductId, tp);
+    }
+
+    @Override
+    public void purchaseCampaignAtTouchpoint(long erpProductId,
+                                             AbstractTouchpoint tp, int units) {
+        serviceProxy.purchaseCampaignAtTouchpoint(erpProductId, tp, units);
+    }
+
+    @Override
+    public List<CampaignExecution> getAllCampaignExecutions() {
+        return serviceProxy.getAllCampaignExecutions();
+    }
 
 }

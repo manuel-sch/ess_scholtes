@@ -12,14 +12,14 @@ import jakarta.ws.rs.core.MediaType;
 @Consumes({MediaType.APPLICATION_JSON})
 public interface TouchpointAccess {
 
-	@POST
-	public AbstractTouchpoint createTouchpointAndPointOfSale(AbstractTouchpoint touchpoint) throws CrmException;
+    @POST
+    public AbstractTouchpoint createTouchpointAndPointOfSale(AbstractTouchpoint touchpoint) throws CrmException;
 
-	@GET
-	public List<AbstractTouchpoint> readAllTouchpoints();
+    @GET
+    public List<AbstractTouchpoint> readAllTouchpoints();
 
-	@GET
-	@Path("/{id}")
-	public AbstractTouchpoint readTouchpoint(@PathParam("id") long id);
-	
+    @GET
+    @Path("/{id}")
+    public AbstractTouchpoint readTouchpoint(@PathParam("id") long id);
+
 }

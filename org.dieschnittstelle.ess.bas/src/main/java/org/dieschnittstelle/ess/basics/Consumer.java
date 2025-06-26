@@ -11,21 +11,21 @@ import java.util.Random;
  */
 public class Consumer {
 
-	/*
-	 * some random generator for determining the number of units that will be
-	 * purchased
-	 */
-	private static final Random randomiser = new Random();
+    /*
+     * some random generator for determining the number of units that will be
+     * purchased
+     */
+    private static final Random randomiser = new Random();
 
-	public void doShopping(List<IStockItem> items) {
+    public void doShopping(List<IStockItem> items) {
 
-		for (IStockItem item : items) {
-			// determine the number of units for each consumable
-			int units = randomiser.nextInt(item.getUnits() + 1);
-			System.out.println("WILL PURCHASE " + units + " OF: " + item);
-			item.purchase(units);
-		}
+        for (IStockItem item : items) {
+            // determine the number of units for each consumable
+            int units = randomiser.nextInt(item.getUnits() + 1);
+            System.out.println("WILL PURCHASE " + units + " OF: " + item);
+            item.purchase(units);
+        }
 
-	}
+    }
 
 }

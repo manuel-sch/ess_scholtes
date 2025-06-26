@@ -56,7 +56,7 @@
                             <skipValidateSpec>true</skipValidateSpec>
                             <generatorName>jaxrs-cxf-client</generatorName>
                             <configOptions>
-<!--                                <apiNameSuffix>Test</apiNameSuffix>-->
+                                <!--                                <apiNameSuffix>Test</apiNameSuffix>-->
                                 <sourceFolder>target/generated-sources/openapi</sourceFolder>
                                 <apiPackage>org.dieschnittstelle.ess.opi.client.api</apiPackage>
                                 <modelPackage>org.dieschnittstelle.ess.opi.client.entities</modelPackage>

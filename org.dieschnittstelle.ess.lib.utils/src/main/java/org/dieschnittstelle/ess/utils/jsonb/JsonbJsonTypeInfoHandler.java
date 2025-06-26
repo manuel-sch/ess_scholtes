@@ -22,6 +22,7 @@ import jakarta.json.bind.serializer.JsonbSerializer;
 import jakarta.json.bind.serializer.SerializationContext;
 import jakarta.json.stream.JsonGenerator;
 import jakarta.json.stream.JsonParser;
+
 import java.lang.reflect.Type;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
@@ -55,8 +56,8 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
     protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(JsonbJsonTypeInfoHandler.class);
 
     public JsonbJsonTypeInfoHandler() {
-        this.jacksonMapper =  new ObjectMapper();
-        this.jacksonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+        this.jacksonMapper = new ObjectMapper();
+        this.jacksonMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
 
     public static class PolymorphicTypeException extends RuntimeException {
@@ -79,7 +80,7 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
         logger.debug("deserialise(): jsonString is: " + jsonString);
 
         if (rtType instanceof Class
-                && !Modifier.isAbstract(((Class)rtType).getModifiers())) {
+                && !Modifier.isAbstract(((Class) rtType).getModifiers())) {
             if (superclassUsesCustomisedDeserialiser((Class) rtType)) {
                 // if we do not have an abstract class, we just use the type for deserialisation
                 logger.debug("deserialise(): we do not have an abstract type, but our supertype declares custom deserialisation. Use Jackson for deserialising: " + rtType);
@@ -92,31 +93,28 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
                     String err = "got exception trying to deserialise json using jackson as johnzon workaround: " + e;
                     throw new PolymorphicTypeException(err, e);
                 }
-            }
-            else {
-                T obj = (T)jsonb.fromJson(jsonString, ((Class)rtType));
+            } else {
+                T obj = (T) jsonb.fromJson(jsonString, ((Class) rtType));
                 logger.debug("deserialise(): deserialised json to concrete type using johnzon: " + obj);
                 return obj;
             }
-        }
-        else {
+        } else {
             // this is a custom implementation of the JsonTypeInfo logics that is possible for deserialisation
             // however, as serialisation does not seem to appear possible without duplicating large part of
             // serialisation logic, we just embed the jackson processing here
             logger.debug("deserialise(): we have an abstract type. Lookup classname of concrete class...");
 
-            String klassname = jsonObj.getString(lookupClassnameProperty((Class)rtType));
+            String klassname = jsonObj.getString(lookupClassnameProperty((Class) rtType));
             logger.debug("deserialise(): klassname is: " + klassname);
 
             try {
                 Class klass = Class.forName(klassname);
                 logger.debug("deserialise(): klass is: " + klass);
-                T obj = (T)jsonb.fromJson(jsonString, klass);
+                T obj = (T) jsonb.fromJson(jsonString, klass);
                 logger.debug("deserialise(): deserialised instance of polymorphic type: " + obj);
                 return obj;
-            }
-            catch (Exception e) {
-                throw new PolymorphicTypeException("Cannot deserialise object of class: " + klassname + ". Got: " + e,e);
+            } catch (Exception e) {
+                throw new PolymorphicTypeException("Cannot deserialise object of class: " + klassname + ". Got: " + e, e);
             }
         }
     }
@@ -124,15 +122,12 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
     public boolean superclassUsesCustomisedDeserialiser(Class klass) {
         if (klass == null) {
             return false;
-        }
-        else if (klass == Object.class) {
+        } else if (klass == Object.class) {
             return false;
-        }
-        else if (klass.isAnnotationPresent(JsonbTypeDeserializer.class) &&
-                ((JsonbTypeDeserializer)klass.getAnnotation(JsonbTypeDeserializer.class)).value() == JsonbJsonTypeInfoHandler.class) {
+        } else if (klass.isAnnotationPresent(JsonbTypeDeserializer.class) &&
+                ((JsonbTypeDeserializer) klass.getAnnotation(JsonbTypeDeserializer.class)).value() == JsonbJsonTypeInfoHandler.class) {
             return true;
-        }
-        else {
+        } else {
             return superclassUsesCustomisedDeserialiser(klass.getSuperclass());
         }
     }
@@ -154,8 +149,7 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
                 try {
                     String classnameProperty = lookupClassnameProperty(obj.getClass());
                     jsonGenerator.write(classnameProperty, obj.getClass().getName());
-                }
-                catch (PolymorphicTypeException pt) {
+                } catch (PolymorphicTypeException pt) {
                     // ignore this exception as we use this method also for any objects embedded in ones
                     // marked for custom deserialisation
                 }
@@ -168,39 +162,35 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
                         // TODO: for full coverage, this would need to be extended
                         if (fieldtype == Integer.TYPE || fieldtype == Integer.class) {
                             logger.debug("serialise(): int value: " + fieldname + "=" + fieldvalue);
-                            jsonGenerator.write(fieldname,(int)fieldvalue);
-                        }
-                        else if (fieldtype == Long.TYPE || fieldtype == Long.class) {
+                            jsonGenerator.write(fieldname, (int) fieldvalue);
+                        } else if (fieldtype == Long.TYPE || fieldtype == Long.class) {
                             logger.debug("serialise(): long value: " + fieldname + "=" + fieldvalue);
-                            jsonGenerator.write(fieldname,(long)fieldvalue);
-                        }
-                        else if (fieldtype == Double.TYPE || fieldtype == Double.class) {
+                            jsonGenerator.write(fieldname, (long) fieldvalue);
+                        } else if (fieldtype == Double.TYPE || fieldtype == Double.class) {
                             logger.debug("serialise(): double value: " + fieldname + "=" + fieldvalue);
-                            jsonGenerator.write(fieldname,(double)fieldvalue);
-                        }
-                        else if (fieldtype == Boolean.TYPE || fieldtype == Boolean.class) {
+                            jsonGenerator.write(fieldname, (double) fieldvalue);
+                        } else if (fieldtype == Boolean.TYPE || fieldtype == Boolean.class) {
                             logger.debug("serialise(): boolean value: " + fieldname + "=" + fieldvalue);
-                            jsonGenerator.write(fieldname,(boolean)fieldvalue);
-                        }
-                        else if (fieldtype == String.class) {
+                            jsonGenerator.write(fieldname, (boolean) fieldvalue);
+                        } else if (fieldtype == String.class) {
                             logger.debug("serialise(): String value: " + fieldname + "=" + fieldvalue);
-                            jsonGenerator.write(fieldname,(String)fieldvalue);
+                            jsonGenerator.write(fieldname, (String) fieldvalue);
                         }
                         // handle enums
-                        else if (fieldtype instanceof Class && ((Class)fieldtype).isEnum()) {
+                        else if (fieldtype instanceof Class && ((Class) fieldtype).isEnum()) {
                             logger.debug("serialise(): enum value: " + fieldname + "=" + fieldvalue);
-                            jsonGenerator.write(fieldname,String.valueOf(fieldvalue));
+                            jsonGenerator.write(fieldname, String.valueOf(fieldvalue));
                         }
                         // handle arrays - note that currently, only arrays containing objects are considered
                         else if (fieldvalue instanceof Collection) {
                             logger.debug("serialise(): serialise embedded array of field " + fieldname);
                             jsonGenerator.writeStartArray(fieldname);
                             showLevel(jsonGenerator);
-                            ((Collection)fieldvalue).forEach(el -> {
+                            ((Collection) fieldvalue).forEach(el -> {
                                 jsonGenerator.writeStartObject();
                                 logger.debug("serialise(): serialise embedded array element of field " + fieldname + " using standard serialiser: " + el);
                                 // serialise the embedded value
-                                serializationContext.serialize(el,jsonGenerator);
+                                serializationContext.serialize(el, jsonGenerator);
                                 jsonGenerator.writeEnd();
                                 logger.debug("serialise(): done serialising embedded array element of field " + fieldname);
                             });
@@ -217,7 +207,7 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
                             logger.debug("serialise(): serialise embedded field value of " + fieldname + " using standard serialiser: " + fieldvalue);
                             showLevel(jsonGenerator);
                             // serialise the embedded value
-                            serializationContext.serialize(fieldvalue,jsonGenerator);
+                            serializationContext.serialize(fieldvalue, jsonGenerator);
                             jsonGenerator.writeEnd();
                             logger.debug("serialise(): done serialising embedded field value of field " + fieldname);
                             showLevel(jsonGenerator);
@@ -226,27 +216,23 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
                 }
 
                 logger.debug("serialise(): done serialising " + obj.getClass());
+            } catch (Exception e) {
+                throw new PolymorphicTypeException("Cannot serialise object: " + obj + ". Got: " + e, e);
             }
-            catch (Exception e) {
-                throw new PolymorphicTypeException("Cannot serialise object: " + obj + ". Got: " + e,e);
-            }
-        }
-        catch (PolymorphicTypeException e) {
+        } catch (PolymorphicTypeException e) {
             throw e;
-        }
-        catch (Exception e) {
-            throw new PolymorphicTypeException("Cannot serialise object: " + obj + ". Got: " + e,e);
+        } catch (Exception e) {
+            throw new PolymorphicTypeException("Cannot serialise object: " + obj + ". Got: " + e, e);
         }
     }
 
     private static List<Method> collectGetters(Class klass) {
         if (klass == Object.class) {
             return new ArrayList<>();
-        }
-        else {
+        } else {
             List methods = Arrays.asList(klass.getDeclaredMethods())
                     .stream()
-                    .filter(m -> Modifier.isPublic(m.getModifiers()) &&  m.getParameterCount() == 0 && !m.isAnnotationPresent(JsonbTransient.class) && m.getName().startsWith("get") || m.getName().startsWith("is"))
+                    .filter(m -> Modifier.isPublic(m.getModifiers()) && m.getParameterCount() == 0 && !m.isAnnotationPresent(JsonbTransient.class) && m.getName().startsWith("get") || m.getName().startsWith("is"))
                     .collect(Collectors.toList());
             methods.addAll(collectGetters(klass.getSuperclass()));
             return methods;
@@ -255,22 +241,19 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
 
     private static String getFieldnameForGetter(String getterName) {
         if (getterName.startsWith("is")) {
-            return getterName.substring(2,3).toLowerCase() + getterName.substring(3);
-        }
-        else {
-            return getterName.substring(3,4).toLowerCase() + getterName.substring(4);
+            return getterName.substring(2, 3).toLowerCase() + getterName.substring(3);
+        } else {
+            return getterName.substring(3, 4).toLowerCase() + getterName.substring(4);
         }
     }
 
     private String lookupClassnameProperty(Class klass) {
         if (klass.isAnnotationPresent(JsonTypeInfo.class)) {
             logger.debug("lookup classname property from annotated klass " + klass);
-            return ((JsonTypeInfo)klass.getAnnotation(JsonTypeInfo.class)).property();
-        }
-        else if (klass.getSuperclass() != null && klass.getSuperclass() != Object.class) {
+            return ((JsonTypeInfo) klass.getAnnotation(JsonTypeInfo.class)).property();
+        } else if (klass.getSuperclass() != null && klass.getSuperclass() != Object.class) {
             return lookupClassnameProperty(klass.getSuperclass());
-        }
-        else {
+        } else {
             throw new PolymorphicTypeException("Could not determine classname property from class " + klass);
         }
     }
@@ -280,8 +263,7 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
             Field level = generator.getClass().getDeclaredField("level");
             level.setAccessible(true);
             logger.debug("generator level is: " + level.get(generator));
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             // ignore
         }
     }
@@ -295,9 +277,8 @@ public class JsonbJsonTypeInfoHandler<T> implements JsonbDeserializer<T>, JsonbS
                 Object delegateObj = delegateField.get(generator);
                 Method writeEnd = delegateObj.getClass().getMethod("writeEnd");
                 writeEnd.invoke(delegateObj);
-            }
-            catch (Exception e) {
-                throw new PolymorphicTypeException("Exception trying to enforce end on generator, it might be that johnzon implementation has changed since tomee maven plugin version 8.0.8. Exception is: " + e,e);
+            } catch (Exception e) {
+                throw new PolymorphicTypeException("Exception trying to enforce end on generator, it might be that johnzon implementation has changed since tomee maven plugin version 8.0.8. Exception is: " + e, e);
             }
         }
     }

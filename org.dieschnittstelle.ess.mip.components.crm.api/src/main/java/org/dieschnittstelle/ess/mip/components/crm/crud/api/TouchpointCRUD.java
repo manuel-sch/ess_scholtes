@@ -7,14 +7,14 @@ import org.dieschnittstelle.ess.entities.crm.AbstractTouchpoint;
 
 public interface TouchpointCRUD {
 
-	public AbstractTouchpoint createTouchpoint(AbstractTouchpoint Touchpoint) throws CrmException;
+    public AbstractTouchpoint createTouchpoint(AbstractTouchpoint Touchpoint) throws CrmException;
 
-	public AbstractTouchpoint readTouchpoint(long id);
+    public AbstractTouchpoint readTouchpoint(long id);
 
-	public List<AbstractTouchpoint> readAllTouchpoints();
-	
-	public AbstractTouchpoint updateTouchpoint(AbstractTouchpoint Touchpoint);
-		
-	public boolean deleteTouchpoint(int id);
+    public List<AbstractTouchpoint> readAllTouchpoints();
+
+    public AbstractTouchpoint updateTouchpoint(AbstractTouchpoint Touchpoint);
+
+    public boolean deleteTouchpoint(int id);
 
 }

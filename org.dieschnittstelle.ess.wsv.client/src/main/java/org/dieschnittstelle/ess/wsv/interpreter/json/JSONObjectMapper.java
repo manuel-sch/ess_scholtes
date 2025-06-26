@@ -204,7 +204,7 @@ public class JSONObjectMapper {
                         } catch (Exception e) {
                             throw new ObjectMappingException("Unable to load class from @class: " + type);
                         }
-                    } else{
+                    } else {
                         throw new ObjectMappingException("Missing or invalid @class property for abstract type: " + type);
                     }
                 } else {

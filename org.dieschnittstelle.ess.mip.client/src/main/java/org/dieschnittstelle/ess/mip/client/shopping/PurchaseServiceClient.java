@@ -1,17 +1,15 @@
 package org.dieschnittstelle.ess.mip.client.shopping;
 
 import org.apache.logging.log4j.Logger;
+import org.dieschnittstelle.ess.entities.crm.AbstractTouchpoint;
+import org.dieschnittstelle.ess.entities.crm.Customer;
+import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
 import org.dieschnittstelle.ess.entities.erp.Campaign;
 import org.dieschnittstelle.ess.entities.shopping.ShoppingCartItem;
 import org.dieschnittstelle.ess.mip.client.apiclients.ServiceProxyFactory;
 import org.dieschnittstelle.ess.mip.client.apiclients.ShoppingCartClient;
-import org.dieschnittstelle.ess.mip.components.crm.api.CustomerTracking;
 import org.dieschnittstelle.ess.mip.components.shopping.api.PurchaseService;
 import org.dieschnittstelle.ess.mip.components.shopping.api.ShoppingException;
-import org.dieschnittstelle.ess.entities.crm.AbstractTouchpoint;
-import org.dieschnittstelle.ess.entities.crm.Customer;
-import org.dieschnittstelle.ess.entities.erp.AbstractProduct;
-import org.dieschnittstelle.ess.mip.components.shopping.cart.api.ShoppingCartService;
 
 public class PurchaseServiceClient implements ShoppingBusinessDelegate {
 
@@ -59,7 +57,8 @@ public class PurchaseServiceClient implements ShoppingBusinessDelegate {
 
     @Override
     public void purchase() throws ShoppingException {
-        this.purchaseServiceProxy.purchaseCartAtTouchpointForCustomer(shoppingCartClient.getShoppingCartEntityId(), customer.getId(), touchpoint.getId());
+        this.purchaseServiceProxy.purchaseCartAtTouchpointForCustomer(shoppingCartClient.getShoppingCartEntityId(), touchpoint.getId(),
+                customer.getId());
     }
 
 }

@@ -67,17 +67,17 @@
             <version>${version.jackson}</version>
             <scope>provided</scope>
         </dependency>
-<!--        &lt;!&ndash; for resteasy/jackson-based polymorphic type handling, we use the following libraries &ndash;&gt;-->
-<!--        <dependency>-->
-<!--            <groupId>org.jboss.resteasy</groupId>-->
-<!--            <artifactId>resteasy-client</artifactId>-->
-<!--            <version>${version.resteasy.client}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.jboss.resteasy</groupId>-->
-<!--            <artifactId>resteasy-jackson2-provider</artifactId>-->
-<!--            <version>${version.resteasy.client}</version>-->
-<!--        </dependency>-->
+        <!--        &lt;!&ndash; for resteasy/jackson-based polymorphic type handling, we use the following libraries &ndash;&gt;-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jboss.resteasy</groupId>-->
+        <!--            <artifactId>resteasy-client</artifactId>-->
+        <!--            <version>${version.resteasy.client}</version>-->
+        <!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jboss.resteasy</groupId>-->
+        <!--            <artifactId>resteasy-jackson2-provider</artifactId>-->
+        <!--            <version>${version.resteasy.client}</version>-->
+        <!--        </dependency>-->
 
     </dependencies>
 

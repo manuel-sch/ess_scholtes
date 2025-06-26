@@ -27,148 +27,148 @@ import jakarta.persistence.TemporalType;
 @Entity
 public class CustomerTransaction implements Serializable {
 
-	protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(CustomerTransaction.class);
+    protected static Logger logger = org.apache.logging.log4j.LogManager.getLogger(CustomerTransaction.class);
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1251851309422364868L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1251851309422364868L;
 
-	@Id
-	@GeneratedValue
-	private long id;
+    @Id
+    @GeneratedValue
+    private long id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@JsonbDateFormat(JsonbDateFormat.TIME_IN_MILLIS)
-	private Date date;
+    @Temporal(TemporalType.TIMESTAMP)
+    @JsonbDateFormat(JsonbDateFormat.TIME_IN_MILLIS)
+    private Date date;
 
-	@ManyToOne
-	private Customer customer;
+    @ManyToOne
+    private Customer customer;
 
-	@ManyToOne
-	private AbstractTouchpoint touchpoint;
+    @ManyToOne
+    private AbstractTouchpoint touchpoint;
 
-	/*
-	 * UE JPA1.1
-	 */
-	@OneToMany(cascade={CascadeType.PERSIST,CascadeType.MERGE,CascadeType.REMOVE})
-	//@OneToMany
-	private List<CustomerTransactionShoppingCartItem> items = new ArrayList<CustomerTransactionShoppingCartItem>();
+    /*
+     * UE JPA1.1
+     */
+    @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    //@OneToMany
+    private List<CustomerTransactionShoppingCartItem> items = new ArrayList<CustomerTransactionShoppingCartItem>();
 
-	private int value;
+    private int value;
 
-	private boolean completed;
-	
-	public CustomerTransaction() {
-		logger.debug("<constructor>");
-	}
-	
-	public CustomerTransaction(Customer customer,AbstractTouchpoint tp,List<CustomerTransactionShoppingCartItem> products) {
-		this.customer = customer;
-		this.touchpoint = tp;
-		this.items = products;
-		this.date = new Date();
-	}
+    private boolean completed;
 
-	public long getId() {
-		return id;
-	}
+    public CustomerTransaction() {
+        logger.debug("<constructor>");
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public CustomerTransaction(Customer customer, AbstractTouchpoint tp, List<CustomerTransactionShoppingCartItem> products) {
+        this.customer = customer;
+        this.touchpoint = tp;
+        this.items = products;
+        this.date = new Date();
+    }
 
-	public Date getDate() {
-		return date;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setDate(Date date) {
-		this.date = date;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public AbstractTouchpoint getTouchpoint() {
-		return touchpoint;
-	}
+    public Date getDate() {
+        return date;
+    }
 
-	public void setTouchpoint(AbstractTouchpoint touchpoint) {
-		this.touchpoint = touchpoint;
-	}
+    public void setDate(Date date) {
+        this.date = date;
+    }
 
-	public int getValue() {
-		return value;
-	}
+    public AbstractTouchpoint getTouchpoint() {
+        return touchpoint;
+    }
 
-	public void setValue(int value) {
-		this.value = value;
-	}
+    public void setTouchpoint(AbstractTouchpoint touchpoint) {
+        this.touchpoint = touchpoint;
+    }
 
-	public boolean isCompleted() {
-		return completed;
-	}
+    public int getValue() {
+        return value;
+    }
 
-	public void setCompleted(boolean completed) {
-		this.completed = completed;
-	}
+    public void setValue(int value) {
+        this.value = value;
+    }
 
-	public Customer getCustomer() {
-		return this.customer;
-	}
+    public boolean isCompleted() {
+        return completed;
+    }
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
 
-	public String toString() {
-		return "<CustomerTransaction " + this.id + " " + this.customer + " "
-				+ this.touchpoint + ", " + this.items + ">";
-	}
+    public Customer getCustomer() {
+        return this.customer;
+    }
 
-	public List<CustomerTransactionShoppingCartItem> getItems() {
-		return items;
-	}
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 
-	public void setItems(List<CustomerTransactionShoppingCartItem> items) {
-		this.items = items;
-	}
-	
-	/*
-	 * lifecycle logging
-	 */
-	
-	@PostLoad
-	public void onPostLoad() {
-		logger.info("@PostLoad: " + this);
-	}
-	
-	@PostPersist
-	public void onPostPersist() {
-		logger.info("@PostPersist: " + this);		
-	}
-	
-	@PostRemove
-	public void onPostRemove() {
-		logger.info("@PostRemove: " + this);
-	}
+    public String toString() {
+        return "<CustomerTransaction " + this.id + " " + this.customer + " "
+                + this.touchpoint + ", " + this.items + ">";
+    }
 
-	@PostUpdate
-	public void onPostUpdate() {
-		logger.info("@PostUpdate: " + this);
-	}
-	
-	@PrePersist
-	public void onPrePersist() {
-		logger.info("@PrePersist: " + this);
-	}
+    public List<CustomerTransactionShoppingCartItem> getItems() {
+        return items;
+    }
 
-	@PreRemove
-	public void onPreRemove() {
-		logger.info("@PreRemove: " + this);
-	}
+    public void setItems(List<CustomerTransactionShoppingCartItem> items) {
+        this.items = items;
+    }
 
-	@PreUpdate
-	public void onPreUpdate() {
-		logger.info("@PreUpdate: " + this);		
-	}
-	
+    /*
+     * lifecycle logging
+     */
+
+    @PostLoad
+    public void onPostLoad() {
+        logger.info("@PostLoad: " + this);
+    }
+
+    @PostPersist
+    public void onPostPersist() {
+        logger.info("@PostPersist: " + this);
+    }
+
+    @PostRemove
+    public void onPostRemove() {
+        logger.info("@PostRemove: " + this);
+    }
+
+    @PostUpdate
+    public void onPostUpdate() {
+        logger.info("@PostUpdate: " + this);
+    }
+
+    @PrePersist
+    public void onPrePersist() {
+        logger.info("@PrePersist: " + this);
+    }
+
+    @PreRemove
+    public void onPreRemove() {
+        logger.info("@PreRemove: " + this);
+    }
+
+    @PreUpdate
+    public void onPreUpdate() {
+        logger.info("@PreUpdate: " + this);
+    }
+
 
 }

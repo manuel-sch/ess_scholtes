@@ -19,7 +19,7 @@ public class CrmException extends Exception {
         super(msg);
     }
 
-    public CrmException(String msg,Throwable cause) {
-        super(msg,cause);
+    public CrmException(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

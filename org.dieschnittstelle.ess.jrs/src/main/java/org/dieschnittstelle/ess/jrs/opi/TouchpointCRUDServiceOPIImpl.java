@@ -35,19 +35,19 @@ public class TouchpointCRUDServiceOPIImpl {
      * @param servletContext
      */
     public TouchpointCRUDServiceOPIImpl(@Context ServletContext servletContext, @Context HttpServletRequest request) {
-        this.service = new TouchpointCRUDServiceImpl(servletContext,request);
+        this.service = new TouchpointCRUDServiceImpl(servletContext, request);
     }
 
     @GET
     @Operation(operationId = "readAllTouchpoints")
     public List<StationaryTouchpoint> readAllTouchpoints() {
-        return (List)this.service.readAllTouchpoints();
+        return (List) this.service.readAllTouchpoints();
     }
 
     @POST
     @Operation(operationId = "createTouchpoint")
     public StationaryTouchpoint createTouchpoint(StationaryTouchpoint touchpoint) {
-        return (StationaryTouchpoint) this.service.createTouchpoint( touchpoint);
+        return (StationaryTouchpoint) this.service.createTouchpoint(touchpoint);
     }
 
     @DELETE
@@ -61,7 +61,7 @@ public class TouchpointCRUDServiceOPIImpl {
     @Path("/{id}")
     @Operation(operationId = "readTouchpoint")
     public StationaryTouchpoint readTouchpoint(@PathParam("id") long id) {
-        return (StationaryTouchpoint)this.service.readTouchpoint(id);
+        return (StationaryTouchpoint) this.service.readTouchpoint(id);
     }
 
 }
